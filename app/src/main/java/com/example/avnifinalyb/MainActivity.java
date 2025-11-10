@@ -68,5 +68,14 @@ public class MainActivity extends AppCompatActivity {
                 }//a toast to show the user their login attempt failed
             }
         });
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivitySignUp.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
