@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
         btnSignUp=findViewById(R.id.btnSignUp);
         etUsername=findViewById(R.id.etUsername);
 
-        /*UsersDatabase db= UsersDatabase.getInstance(this);
+        UsersDatabase db= UsersDatabase.getInstance(this);
         UsernamesDao userNamesDao=db.usernamesDao();
-        Usernames user=new Usernames();
+        /*Usernames user=new Usernames();
         user.setUsername("noam");
         user.setPassword("123");
         UsernamesDao.insert(user);
