@@ -1,9 +1,12 @@
 package com.example.avnifinalyb;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +16,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tvEnterDetails, tvWelcome;
-    EditText etPassword;
-    Button btnLogin;
+    TextView tvEnterDetails;
+    EditText etPassword, etUsername;
+    Button btnLogin, btnSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +32,41 @@ public class MainActivity extends AppCompatActivity {
         tvEnterDetails=findViewById(R.id.tvEnterDetails);
         etPassword=findViewById(R.id.etPassword);
         btnLogin=findViewById(R.id.btnLogin);
-        tvWelcome=findViewById(R.id.tvWelcome);
+        btnSignUp=findViewById(R.id.btnSignUp);
+        etUsername=findViewById(R.id.etUsername);
 
+        /*UsersDatabase db= UsersDatabase.getInstance(this);
+        UsernamesDao userNamesDao=db.usernamesDao();
+        Usernames user=new Usernames();
+        user.setUsername("noam");
+        user.setPassword("123");
+        UsernamesDao.insert(user);
+        user=new Usernames();
+        user.setUsername("uri");
+        user.setPassword("abc");
+        UsernamesDao.insert(user);
+        user=new Usernames();
+        user.setUsername("oren");
+        user.setPassword("456");
+        UsernamesDao.insert(user);//here i am inserting the users into the database*/
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username=etUsername.getText().toString().trim();
+                String password=etPassword.getText().toString().trim();//getting the text from the user(trim removes unnecessary spaces)
+                Usernames user=userNamesDao.login(username,password);
+                if(user!=null)
+                {
+                    Intent intent = new Intent(MainActivity.this, ActivityGame.class);
+                    intent.putExtra("USERNAME_KEY", username);//saves the username of the user
+                    startActivity(intent);
+                    finish();
+                }//using the function from the dao to check if the user is in the database(it retuns null if not found)
+                else {
+                    Toast.makeText(MainActivity.this, "UserName or Password is incorrect", Toast.LENGTH_SHORT).show();
+                }//a toast to show the user their login attempt failed
+            }
+        });
     }
 }
