@@ -37,18 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
         UsersDatabase db= UsersDatabase.getInstance(this);
         UsernamesDao userNamesDao=db.usernamesDao();
-        /*Usernames user=new Usernames();
+        Usernames user=new Usernames();
         user.setUsername("noam");
         user.setPassword("123");
-        UsernamesDao.insert(user);
-        user=new Usernames();
-        user.setUsername("uri");
-        user.setPassword("abc");
-        UsernamesDao.insert(user);
-        user=new Usernames();
-        user.setUsername("oren");
-        user.setPassword("456");
-        UsernamesDao.insert(user);//here i am inserting the users into the database*/
+        userNamesDao.insert(user);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }//using the function from the dao to check if the user is in the database(it retuns null if not found)
                 else {
-                    Toast.makeText(MainActivity.this, "UserName or Password is incorrect", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
                 }//a toast to show the user their login attempt failed
             }
         });

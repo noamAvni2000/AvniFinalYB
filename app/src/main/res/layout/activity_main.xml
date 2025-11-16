@@ -63,7 +63,6 @@
         android:layout_height="wrap_content"
         android:text="Sign up"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_tobottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.747"
         app:layout_constraintStart_toStartOf="parent"
