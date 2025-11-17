@@ -46,33 +46,50 @@ public class ActivitySignUp extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username=etUsername2.getText().toString().trim();
-                String password=etPassword2.getText().toString().trim();//getting the text from the user(trim removes unnecessary spaces)
-                String confirm=etConfirm.getText().toString().trim();
-                Log.d("ActivitySignUp", "btnRegister.onclick: confirm="+confirm+" password="+password);
 
-                if(!confirm.equals(password))//checks if the password is entered the same in both edit texts
-                {
-                    tvEnter.setText("Password or username incorrect");
-                    Toast.makeText(ActivitySignUp.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
-                    Log.d("ActivitySignUp", "btnRegister.onclick: confirm="+confirm+" password="+password);
+                String username = etUsername2.getText().toString().trim();
+                String password = etPassword2.getText().toString().trim();
+                String confirm = etConfirm.getText().toString().trim();
+
+                //checking if there is text in the username edittext
+                if (username.isEmpty()) {
+                    tvEnter.setText("Please enter a username");
+                    return;
                 }
-                else {
-                    Usernames user1 = userNamesDao.login(username, password);
-                    if(user1!=null) {
-                        userNamesDao.insert(user1);
-                        Intent intent = new Intent(ActivitySignUp.this, ActivityGame.class);
-                        intent.putExtra("USERNAME_KEY", username);//saves the username of the user
-                        startActivity(intent);
-                        finish();
-                        Log.d("ActivitySignUp", "btnRegister.onclick: user1");
-                    }
-                    else{
-                        tvEnter.setText("Password or username incorrect");
-                        Toast.makeText(ActivitySignUp.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
-                        Log.d("ActivitySignUp", "btnRegister.onclick: user2");
-                    }
+
+                //checking if there is text in the password edittext
+                if (password.isEmpty()) {
+                    tvEnter.setText("Please enter a password");
+                    return;
                 }
+
+                //checking if there is text in the confirm edittext
+                if (confirm.isEmpty()) {
+                    tvEnter.setText("Please confirm your password");
+                    return;
+                }
+
+                //checking if the passwords are the same
+                if (!confirm.equals(password)) {
+                    tvEnter.setText("Passwords are not the same");
+                    return;
+                }
+
+                //checking if the username already exists
+                Usernames existing = userNamesDao.getUserByUsername(username);
+
+                if (existing != null) {
+                    tvEnter.setText("Username already exists");
+                    return;
+                }
+
+                //if passed all checks creates a new user, inserts it and goes to the game activity
+                Usernames newUser = new Usernames(username, password);
+                userNamesDao.insert(newUser);
+                Intent intent = new Intent(ActivitySignUp.this, ActivityGame.class);
+                intent.putExtra("USERNAME_KEY", username);
+                startActivity(intent);
+                finish();
             }
         });
     }

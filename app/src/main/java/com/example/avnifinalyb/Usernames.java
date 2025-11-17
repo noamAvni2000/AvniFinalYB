@@ -12,6 +12,13 @@ public class  Usernames{
 
     private String password;
 
+    public Usernames(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public Usernames() {}
+
     public int getId() {
         return id;
     }

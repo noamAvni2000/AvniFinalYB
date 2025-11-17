@@ -25,4 +25,8 @@ public interface UsernamesDao {
     @Query("SELECT*FROM Usernames")
     List<Usernames>getAllInfo();
 
+    @Query("SELECT * FROM Usernames WHERE username = :username LIMIT 1")
+    Usernames getUserByUsername(String username);
+
+
 }
