@@ -37,8 +37,8 @@ public class ActivitySignUp extends AppCompatActivity {
         btnRegister=findViewById(R.id.btnRegister);
         tvEnter=findViewById(R.id.tvEnter);
 
-        //etPassword2.setTransformationMethod(new PasswordTransformationMethod());
-        //etConfirm.setTransformationMethod(new PasswordTransformationMethod());//hides the text entered into the edit text
+        etPassword2.setTransformationMethod(new PasswordTransformationMethod());
+        etConfirm.setTransformationMethod(new PasswordTransformationMethod());//hides the text entered into the edit text
 
         UsersDatabase db= UsersDatabase.getInstance(this);
         UsernamesDao userNamesDao=db.usernamesDao();//creating veriables for the database
