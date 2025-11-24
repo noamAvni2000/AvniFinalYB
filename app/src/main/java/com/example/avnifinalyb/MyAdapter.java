@@ -5,43 +5,63 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    private ArrayList<MyItem> items;
+    private ArrayList<MyItem> itemList;
 
-    public MyAdapter(ArrayList<MyItem> items) {
-        this.items = items;
+    public MyAdapter(ArrayList<MyItem> itemList) {
+        this.itemList = itemList;
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tvRow;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            tvRow = itemView.findViewById(R.id.tvRow);
-        }
+    public void addItem(MyItem item) {
+        itemList.add(item);
+        notifyItemInserted(itemList.size() - 1);
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item, parent, false);
-
-        return new MyViewHolder(view);
+        return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        MyItem item = items.get(position);
-        holder.tvRow.setText(item.getText());
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        MyItem item = itemList.get(position);
+
+        holder.tvCountry.setText(item.getCountry());
+        holder.tvContinent.setText(item.getContinent());
+        holder.tvReligion.setText(item.getReligion());
+        holder.tvLandLocked.setText(item.getLandLocked());
+        holder.tvHasNoam.setText(item.getHasNoam());
+        holder.tvPopulation.setText(item.getPopulation());
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return itemList.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvCountry, tvContinent, tvReligion, tvLandLocked, tvHasNoam, tvPopulation;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            tvCountry = itemView.findViewById(R.id.tvCountry);
+            tvContinent = itemView.findViewById(R.id.tvContinent);
+            tvReligion = itemView.findViewById(R.id.tvReligion);
+            tvLandLocked = itemView.findViewById(R.id.tvLandLocked);
+            tvHasNoam = itemView.findViewById(R.id.tvHasNoam);
+            tvPopulation = itemView.findViewById(R.id.tvPopulation);
+        }
     }
 }
+

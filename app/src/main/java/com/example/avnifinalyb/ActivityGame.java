@@ -13,12 +13,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class ActivityGame extends AppCompatActivity {
 
     EditText etGuess;
     Button btnEnterCountry, btnAiHelp;
     TextView tvGame;
+    RecyclerView recyclerView;
+    MyAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +39,14 @@ public class ActivityGame extends AppCompatActivity {
         btnEnterCountry = findViewById(R.id.btnEnterCountry);
         btnAiHelp = findViewById(R.id.btnAiHelp);
         tvGame = findViewById(R.id.tvGame);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));//Set layout manager
+
+        ArrayList<MyItem> list = MyItemData.getItems();// Get data from another class
+
+        adapter = new MyAdapter(list);
+        recyclerView.setAdapter(adapter);
 
         btnAiHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +71,19 @@ public class ActivityGame extends AppCompatActivity {
         btnEnterCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String country = etGuess.getText().toString().trim();
 
+                if (country.isEmpty()) {
+                    Toast.makeText(ActivityGame.this, "Please enter a country", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Use MyItemData helper class
+                MyItem item = MyItemData.getCountryInfo(country);
+
+                adapter.addItem(item);
+                recyclerView.scrollToPosition(list.size() - 1);
+                etGuess.setText("");
             }
         });
     }
