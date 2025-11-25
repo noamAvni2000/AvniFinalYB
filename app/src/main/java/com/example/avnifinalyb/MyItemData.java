@@ -19,14 +19,14 @@ public class MyItemData {
             data.put("Cambodia", new MyItem("Cambodia", "Asia", "Buddhism", "No", "No", "16M"));
             data.put("China", new MyItem("China", "Asia", "Mixed", "No", "No", "1.4B"));
             data.put("Cyprus", new MyItem("Cyprus", "Asia", "Christianity", "No", "No", "1.2M"));
-            data.put("Georgia", new MyItem("Georgia", "Asia", "Christianity", "No", "No", "3.7M"));
+            data.put("Georgia", new MyItem("Georgia", "Asia", "Christianity", "No", "Yes", "3.7M"));
             data.put("India", new MyItem("India", "Asia", "Hinduism", "No", "No", "1.4B"));
             data.put("Indonesia", new MyItem("Indonesia", "Asia", "Islam", "No", "No", "273M"));
             data.put("Iran", new MyItem("Iran", "Asia", "Islam", "No", "No", "83M"));
             data.put("Iraq", new MyItem("Iraq", "Asia", "Islam", "No", "No", "40M"));
             data.put("Israel", new MyItem("Israel", "Asia", "Judaism", "No", "Yes", "9M"));
             data.put("Japan", new MyItem("Japan", "Asia", "Shinto/Buddhism", "No", "No", "125M"));
-            data.put("Jordan", new MyItem("Jordan", "Asia", "Islam", "No", "No", "10M"));
+            data.put("Jordan", new MyItem("Jordan", "Asia", "Islam", "No", "Yes", "10M"));
             data.put("Kazakhstan", new MyItem("Kazakhstan", "Asia", "Islam/Christianity", "Yes", "No", "19M"));
             data.put("Kuwait", new MyItem("Kuwait", "Asia", "Islam", "No", "No", "4.3M"));
             data.put("Kyrgyzstan", new MyItem("Kyrgyzstan", "Asia", "Islam", "Yes", "No", "6.5M"));
@@ -40,7 +40,6 @@ public class MyItemData {
             data.put("North Korea", new MyItem("North Korea", "Asia", "Atheist / Juche", "Yes", "No", "25M"));
             data.put("Oman", new MyItem("Oman", "Asia", "Islam", "No", "No", "5M"));
             data.put("Pakistan", new MyItem("Pakistan", "Asia", "Islam", "No", "No", "220M"));
-            data.put("Palestine", new MyItem("Palestine", "Asia", "Islam / Christianity", "No", "No", "5M"));
             data.put("Philippines", new MyItem("Philippines", "Asia", "Christianity", "No", "No", "109M"));
             data.put("Qatar", new MyItem("Qatar", "Asia", "Islam", "No", "No", "2.8M"));
             data.put("Saudi Arabia", new MyItem("Saudi Arabia", "Asia", "Islam", "No", "No", "35M"));
@@ -60,25 +59,25 @@ public class MyItemData {
 
             // --- EUROPE ---
             data.put("Albania", new MyItem("Albania", "Europe", "Islam / Christianity", "No", "No", "2.8M"));
-            data.put("Andorra", new MyItem("Andorra", "Europe", "Christianity", "No", "No", "0.08M"));
-            data.put("Austria", new MyItem("Austria", "Europe", "Christianity", "No", "No", "9M"));
+            data.put("Andorra", new MyItem("Andorra", "Europe", "Christianity", "No", "Yes", "0.08M"));
+            data.put("Austria", new MyItem("Austria", "Europe", "Christianity", "No", "Yes", "9M"));
             data.put("Belarus", new MyItem("Belarus", "Europe", "Christianity", "No", "No", "9.4M"));
             data.put("Belgium", new MyItem("Belgium", "Europe", "Christianity / Secular", "No", "No", "11.6M"));
             data.put("Bosnia and Herzegovina", new MyItem("Bosnia and Herzegovina", "Europe", "Islam / Christianity", "No", "No", "3.3M"));
-            data.put("Bulgaria", new MyItem("Bulgaria", "Europe", "Christianity", "No", "No", "7M"));
+            data.put("Bulgaria", new MyItem("Bulgaria", "Europe", "Christianity", "No", "Yes", "7M"));
             data.put("Croatia", new MyItem("Croatia", "Europe", "Christianity", "No", "No", "4M"));
             data.put("Cyprus", new MyItem("Cyprus", "Europe", "Christianity / Islam", "No", "No", "1.2M"));
             data.put("Czech Republic", new MyItem("Czech Republic", "Europe", "Christianity / Nonreligious", "No", "No", "10.7M"));
             data.put("Denmark", new MyItem("Denmark", "Europe", "Christianity", "No", "No", "5.8M"));
             data.put("Estonia", new MyItem("Estonia", "Europe", "Christianity / Nonreligious", "No", "No", "1.3M"));
             data.put("Finland", new MyItem("Finland", "Europe", "Christianity / Nonreligious", "No", "No", "5.5M"));
-            data.put("France", new MyItem("France", "Europe", "Christianity / Secular", "No", "No", "67M"));
-            data.put("Germany", new MyItem("Germany", "Europe", "Christianity / Secular", "No", "No", "83M"));
-            data.put("Greece", new MyItem("Greece", "Europe", "Christianity", "No", "No", "10.7M"));
+            data.put("France", new MyItem("France", "Europe", "Christianity / Secular", "No", "Yes", "67M"));
+            data.put("Germany", new MyItem("Germany", "Europe", "Christianity / Secular", "No", "Yes", "83M"));
+            data.put("Greece", new MyItem("Greece", "Europe", "Christianity", "No", "Yes", "10.7M"));
             data.put("Hungary", new MyItem("Hungary", "Europe", "Christianity", "No", "No", "9.6M"));
             data.put("Iceland", new MyItem("Iceland", "Europe", "Christianity", "No", "No", "0.36M"));
             data.put("Ireland", new MyItem("Ireland", "Europe", "Christianity", "No", "No", "5M"));
-            data.put("Italy", new MyItem("Italy", "Europe", "Christianity", "No", "No", "60M"));
+            data.put("Italy", new MyItem("Italy", "Europe", "Christianity", "No", "Yes", "60M"));
             data.put("Kosovo", new MyItem("Kosovo", "Europe", "Islam / Christianity", "No", "No", "1.8M"));
             data.put("Latvia", new MyItem("Latvia", "Europe", "Christianity / Nonreligious", "No", "No", "1.9M"));
             data.put("Liechtenstein", new MyItem("Liechtenstein", "Europe", "Christianity", "Yes", "No", "0.04M"));
@@ -99,16 +98,16 @@ public class MyItemData {
             data.put("Serbia", new MyItem("Serbia", "Europe", "Christianity", "No", "No", "6.9M"));
             data.put("Slovakia", new MyItem("Slovakia", "Europe", "Christianity", "No", "No", "5.4M"));
             data.put("Slovenia", new MyItem("Slovenia", "Europe", "Christianity", "No", "No", "2.1M"));
-            data.put("Spain", new MyItem("Spain", "Europe", "Christianity", "No", "No", "47M"));
+            data.put("Spain", new MyItem("Spain", "Europe", "Christianity", "No", "Yes", "47M"));
             data.put("Sweden", new MyItem("Sweden", "Europe", "Christianity / Secular", "No", "No", "10M"));
-            data.put("Switzerland", new MyItem("Switzerland", "Europe", "Christianity / Secular", "No", "No", "8.6M"));
+            data.put("Switzerland", new MyItem("Switzerland", "Europe", "Christianity / Secular", "No", "Yes", "8.6M"));
             data.put("Ukraine", new MyItem("Ukraine", "Europe", "Christianity", "No", "No", "41M"));
             data.put("United Kingdom", new MyItem("United Kingdom", "Europe", "Christianity / Secular", "No", "No", "67M"));
             data.put("Vatican City", new MyItem("Vatican City", "Europe", "Christianity", "No", "No", "0.0008M"));
 
             // --- NORTH AMERICA ---
             data.put("Canada", new MyItem("Canada", "North America", "Christianity / Secular", "No", "No", "38M"));
-            data.put("United States", new MyItem("United States", "North America", "Christianity / Secular", "No", "No", "331M"));
+            data.put("United States", new MyItem("United States", "North America", "Christianity / Secular", "No", "Yes", "331M"));
             data.put("Mexico", new MyItem("Mexico", "North America", "Christianity", "No", "No", "128M"));
             data.put("Guatemala", new MyItem("Guatemala", "North America", "Christianity", "No", "No", "17M"));
             data.put("Belize", new MyItem("Belize", "North America", "Christianity", "No", "No", "0.39M"));

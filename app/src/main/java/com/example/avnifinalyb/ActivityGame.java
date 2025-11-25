@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityGame extends AppCompatActivity {
 
@@ -43,17 +44,19 @@ public class ActivityGame extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));//Set layout manager
 
-        ArrayList<MyItem> list = MyItemData.getItems();// Get data from another class
+        // Start with an empty list
+        ArrayList<MyItem> list = new ArrayList<>();
 
         adapter = new MyAdapter(list);
         recyclerView.setAdapter(adapter);
+
 
         btnAiHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityGame.this);
                 builder.setTitle("Are you sure you want to use a hint?");
-                builder.setMessage("i dont know what this is yet");
+                builder.setMessage("It will hurt your statistics");
 
                 builder.setPositiveButton("Yes", (dialog, which) -> {
                     //here i will place the ai help code
@@ -78,11 +81,15 @@ public class ActivityGame extends AppCompatActivity {
                     return;
                 }
 
-                // Use MyItemData helper class
+                // Get the country info
                 MyItem item = MyItemData.getCountryInfo(country);
 
-                adapter.addItem(item);
-                recyclerView.scrollToPosition(list.size() - 1);
+                // Optional: check if the item is already in the list to avoid duplicates
+                if (!list.contains(item)) {
+                    adapter.addItem(item); // Add only the guessed country
+                    recyclerView.scrollToPosition(list.size() - 1);
+                }
+
                 etGuess.setText("");
             }
         });
