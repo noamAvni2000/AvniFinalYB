@@ -41,6 +41,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.tvLandLocked.setText(item.getLandLocked());
         holder.tvHasNoam.setText(item.getHasNoam());
         holder.tvPopulation.setText(item.getPopulation());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onItemClick(item);
+        });
+
     }
 
     @Override
@@ -63,5 +68,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             tvPopulation = itemView.findViewById(R.id.tvPopulation);
         }
     }
+
+    public void updateList(ArrayList<MyItem> newList) {
+        itemList = newList;
+        notifyDataSetChanged();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(MyItem item);
+    }
+
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
 }
 
