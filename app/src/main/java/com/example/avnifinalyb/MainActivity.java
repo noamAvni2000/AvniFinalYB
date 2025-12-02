@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvEnterDetails;
     EditText etPassword, etUsername;
-    Button btnLogin, btnSignUp;
+    Button btnLogin, btnSignUp, btnAdmin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin=findViewById(R.id.btnLogin);
         btnSignUp=findViewById(R.id.btnSignUp);
         etUsername=findViewById(R.id.etUsername);
+        btnAdmin=findViewById(R.id.btnAdmin);
 
         etPassword.setTransformationMethod(new PasswordTransformationMethod());//hides the password during login
 
@@ -44,6 +45,15 @@ public class MainActivity extends AppCompatActivity {
         user.setUsername("noam");
         user.setPassword("123");
         userNamesDao.insert(user);
+
+        btnAdmin.setOnClickListener(new View.OnClickListener() {//$$
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityGame.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
