@@ -1,9 +1,14 @@
 package com.example.avnifinalyb;
 
+//import static com.example.avnifinalyb.MyItemData.data;
+import static com.example.avnifinalyb.MyItemData.getItems;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,7 +55,7 @@ public class ActivityGame extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         // Master data (all countries)
-        List<MyItem> fromData = MyItemData.getItems();
+        List<MyItem> fromData = getItems();
         final ArrayList<MyItem> allCountries = new ArrayList<>(fromData);
 
         // Lists we'll use
@@ -78,6 +83,7 @@ public class ActivityGame extends AppCompatActivity {
                 recyclerViewSuggestions.setVisibility(View.GONE);
             }
         });
+
 
         // --- TextWatcher: update suggestions as user types ---
         etGuess.addTextChangedListener(new TextWatcher() {
@@ -197,4 +203,21 @@ public class ActivityGame extends AppCompatActivity {
             }
         });
     }
+
+    private void fillTheGuess(){
+                   // String Partial = etGuess.getText();
+                   // String [] countries=new String[getItems().size()]; //a list of all the countries
+               String[] COUNTRIES = new String[] {
+                    "Belgium", "France", "Italy", "Germany", "Spain"
+            };
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ActivityGame.this,
+                            android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+            AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.etGuess);
+            textView.setAdapter(adapter);
+
+
+    }
+
+
 }

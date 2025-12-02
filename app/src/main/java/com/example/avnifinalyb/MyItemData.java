@@ -140,7 +140,6 @@ public class MyItemData {
             data.put("Suriname", new MyItem("Suriname", "South America", "Christianity / Hinduism / Islam", "No", "No", "0.6M"));
             data.put("Uruguay", new MyItem("Uruguay", "South America", "Christianity", "No", "No", "3.5M"));
             data.put("Venezuela", new MyItem("Venezuela", "South America", "Christianity", "No", "No", "28M"));
-
         }
 
     // Returns a single country's info
@@ -157,6 +156,14 @@ public class MyItemData {
         return new ArrayList<>(data.values());
     }
 
+    //returns an array of only the countries without their information
+    /*public static String[] getCountries(){
+            String[] countries = new String[data.size()];
+            for(int i=0; i< data.size(); i++) {
+                countries[i]=data[i].getCountry();
+            }
+            return countries;
+    }*/
 }
 
 
