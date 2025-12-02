@@ -45,14 +45,7 @@ public class ActivityGame extends AppCompatActivity {
             return insets;
         });
 
-        // UI refs
-        etGuess = findViewById(R.id.etGuess);
-        btnEnterCountry = findViewById(R.id.btnEnterCountry);
-        btnAiHelp = findViewById(R.id.btnAiHelp);
-        tvGame = findViewById(R.id.tvGame);
-
-        recyclerViewSuggestions = findViewById(R.id.recyclerViewSuggestions);
-        recyclerView = findViewById(R.id.recyclerView);
+        connectUiElements();//all the ui references
 
         // Master data (all countries)
         List<MyItem> fromData = getItems();
@@ -204,6 +197,7 @@ public class ActivityGame extends AppCompatActivity {
         });
     }
 
+
     private void fillTheGuess(){
                    // String Partial = etGuess.getText();
                    // String [] countries=new String[getItems().size()]; //a list of all the countries
@@ -219,5 +213,45 @@ public class ActivityGame extends AppCompatActivity {
 
     }
 
+    private void connectUiElements(){
+        etGuess = findViewById(R.id.etGuess);
+        btnEnterCountry = findViewById(R.id.btnEnterCountry);
+        btnAiHelp = findViewById(R.id.btnAiHelp);
+        tvGame = findViewById(R.id.tvGame);
+        recyclerViewSuggestions = findViewById(R.id.recyclerViewSuggestions);
+        recyclerView = findViewById(R.id.recyclerView);
+    }
 
+    /*public void onTextChanged(CharSequence s, int start, int before, int count){
+        String input = s.toString().trim();
+        suggestions.clear();
+
+        if (input.isEmpty()) {
+            // hide suggestions when input is empty
+            suggestionsAdapter.updateList(new ArrayList<MyItem>());
+            recyclerViewSuggestions.setVisibility(View.GONE);
+            return;
+        }
+
+        String lower = input.toLowerCase();
+        for (MyItem mi : allCountries) {
+            if (mi.getCountry().toLowerCase().startsWith(lower)) { // startsWith requirement
+                suggestions.add(mi);
+            }
+        }
+
+        // update suggestions adapter (replace list)
+        suggestionsAdapter.updateList(new ArrayList<MyItem>(suggestions));
+
+        // show or hide suggestions view
+        if (suggestions.isEmpty()) {
+            recyclerViewSuggestions.setVisibility(View.GONE);
+        } else {
+            recyclerViewSuggestions.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override*/
+    //public void afterTextChanged(Editable s) { /* no-op */ }
+    //}
 }
