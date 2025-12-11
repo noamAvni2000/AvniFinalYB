@@ -156,7 +156,17 @@ public class MyItemData {
         return new ArrayList<>(data.values());
     }
 
-    //returns an array of only the countries without their information
+    //Returns a random country from the list of countries
+    public static MyItem GetRandomCountry() {
+            ArrayList<MyItem> list = new ArrayList<>(getItems()); // all countries
+            if (list.isEmpty()) return null;
+
+            int index = new java.util.Random().nextInt(list.size());
+            return list.get(index);
+    }
+
+
+        //returns an array of only the countries without their information
     /*public static String[] getCountries(){
             String[] countries = new String[data.size()];
             for(int i=0; i< data.size(); i++) {
@@ -164,6 +174,8 @@ public class MyItemData {
             }
             return countries;
     }*/
+
+
 }
 
 
