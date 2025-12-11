@@ -1,14 +1,11 @@
 package com.example.avnifinalyb;
 
-//import static com.example.avnifinalyb.MyItemData.data;
 import static com.example.avnifinalyb.MyItemData.getItems;
 
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,186 +31,40 @@ public class ActivityGame extends AppCompatActivity {
     RecyclerView recyclerView, recyclerViewSuggestions;
     MyAdapter adapter, suggestionsAdapter;
 
+    // Data lists
+    ArrayList<MyItem> allCountries;
+    ArrayList<MyItem> guessedCountries;
+    ArrayList<MyItem> suggestions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_game);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        connectUiElements();//all the ui references
-
-        // Master data (all countries)
-        List<MyItem> fromData = getItems();
-        final ArrayList<MyItem> allCountries = new ArrayList<>(fromData);
-
-        // Lists we'll use
-        final ArrayList<MyItem> guessedCountries = new ArrayList<>(); // items user confirmed
-        final ArrayList<MyItem> suggestions = new ArrayList<>();     // current suggested items while typing
-
-        // --- initialize suggestions adapter FIRST then set it on the RecyclerView ---
-        suggestionsAdapter = new MyAdapter(suggestions);
-        recyclerViewSuggestions.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewSuggestions.setAdapter(suggestionsAdapter);
-        recyclerViewSuggestions.setVisibility(View.GONE); // hide initially
-
-        // --- initialize guessed adapter and set on main RecyclerView ---
-        adapter = new MyAdapter(guessedCountries);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-
-        // --- suggestion item click: fill the EditText (no lambdas) ---
-        suggestionsAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(MyItem item) {
-                etGuess.setText(item.getCountry());
-                etGuess.setSelection(item.getCountry().length());
-                // hide suggestions after selecting
-                recyclerViewSuggestions.setVisibility(View.GONE);
-            }
-        });
-
-
-        // --- TextWatcher: update suggestions as user types ---
-        etGuess.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { /* no-op */ }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String input = s.toString().trim();
-                suggestions.clear();
-
-                if (input.isEmpty()) {
-                    // hide suggestions when input is empty
-                    suggestionsAdapter.updateList(new ArrayList<MyItem>());
-                    recyclerViewSuggestions.setVisibility(View.GONE);
-                    return;
-                }
-
-                String lower = input.toLowerCase();
-                for (MyItem mi : allCountries) {
-                    if (mi.getCountry().toLowerCase().startsWith(lower)) { // startsWith requirement
-                        suggestions.add(mi);
-                    }
-                }
-
-                // update suggestions adapter (replace list)
-                suggestionsAdapter.updateList(new ArrayList<MyItem>(suggestions));
-
-                // show or hide suggestions view
-                if (suggestions.isEmpty()) {
-                    recyclerViewSuggestions.setVisibility(View.GONE);
-                } else {
-                    recyclerViewSuggestions.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) { /* no-op */ }
-        });
-
-        // --- AI help button (kept as you had it) ---
-        btnAiHelp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityGame.this);
-                builder.setTitle("Are you sure you want to use a hint?");
-                builder.setMessage("It will hurt your statistics");
-
-                builder.setPositiveButton("Yes", (dialog, which) -> {
-                    // AI help code
-                });
-
-                builder.setNegativeButton("No", (dialog, which) -> {
-                    // do nothing
-                });
-
-                builder.show();
-            }
-        });
-
-        // --- Enter button: confirm the typed country and add to guessed list ---
-        btnEnterCountry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String countryText = etGuess.getText().toString().trim();
-                if (countryText.isEmpty()) {
-                    Toast.makeText(ActivityGame.this, "Please enter a country", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // lookup (case-insensitive) — MyItemData keys are exact names, so try exact match first,
-                // then try case-insensitive search through allCountries.
-                MyItem found = MyItemData.getCountryInfo(countryText);
-                // getCountryInfo returns Unknown fallback if not found in map; adjust check:
-                if (found.getContinent().equals("Unknown") && found.getReligion().equals("Unknown") &&
-                        found.getPopulation().equals("Unknown")) {
-                    // try case-insensitive match against allCountries to accept "israel" or "Israel"
-                    MyItem ci = null;
-                    for (MyItem mi : allCountries) {
-                        if (mi.getCountry().equalsIgnoreCase(countryText)) {
-                            ci = mi;
-                            break;
-                        }
-                    }
-                    if (ci == null) {
-                        Toast.makeText(ActivityGame.this, "Country not found", Toast.LENGTH_SHORT).show();
-                        return;
-                    } else {
-                        found = ci;
-                    }
-                }
-
-                // avoid duplicates by comparing country names (case-insensitive)
-                boolean already = false;
-                for (MyItem mi : guessedCountries) {
-                    if (mi.getCountry().equalsIgnoreCase(found.getCountry())) {
-                        already = true;
-                        break;
-                    }
-                }
-                if (already) {
-                    Toast.makeText(ActivityGame.this, "Already guessed this country", Toast.LENGTH_SHORT).show();
-                    etGuess.setText("");
-                    recyclerViewSuggestions.setVisibility(View.GONE);
-                    return;
-                }
-
-                // add to guessed list and update adapter
-                adapter.addItem(found);
-                recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-
-                // clear input and hide suggestions
-                etGuess.setText("");
-                suggestionsAdapter.updateList(new ArrayList<MyItem>());
-                recyclerViewSuggestions.setVisibility(View.GONE);
-            }
-        });
+        connectUiElements();
+        loadDataLists();
+        setupSuggestionAdapter();
+        setupGuessedAdapter();
+        setupSuggestionClickListener();
+        setupTextWatcher();
+        setupAiHelpButton();
+        setupEnterCountryButton();
     }
 
-
-    private void fillTheGuess(){
-                   // String Partial = etGuess.getText();
-                   // String [] countries=new String[getItems().size()]; //a list of all the countries
-               String[] COUNTRIES = new String[] {
-                    "Belgium", "France", "Italy", "Germany", "Spain"
-            };
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ActivityGame.this,
-                            android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-            AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.etGuess);
-            textView.setAdapter(adapter);
+    // --------------------------------------------------------------------
+    // FUNCTIONS
+    // --------------------------------------------------------------------
 
 
-    }
-
-    private void connectUiElements(){
+    /** Connects UI elements (findViewById for all views). */
+    private void connectUiElements() {
         etGuess = findViewById(R.id.etGuess);
         btnEnterCountry = findViewById(R.id.btnEnterCountry);
         btnAiHelp = findViewById(R.id.btnAiHelp);
@@ -222,28 +73,76 @@ public class ActivityGame extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
     }
 
-    /*public void onTextChanged(CharSequence s, int start, int before, int count){
-        String input = s.toString().trim();
+    /** Loads the full dataset and initializes working lists. */
+    private void loadDataLists() {
+        List<MyItem> fromData = getItems();
+        allCountries = new ArrayList<>(fromData);
+        guessedCountries = new ArrayList<>();
+        suggestions = new ArrayList<>();
+    }
+
+    /** Sets up the RecyclerView that shows typing suggestions. */
+    private void setupSuggestionAdapter() {
+        suggestionsAdapter = new MyAdapter(suggestions);
+        recyclerViewSuggestions.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewSuggestions.setAdapter(suggestionsAdapter);
+        recyclerViewSuggestions.setVisibility(View.GONE);
+    }
+
+    /** Sets up the RecyclerView that shows guessed countries. */
+    private void setupGuessedAdapter() {
+        adapter = new MyAdapter(guessedCountries);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
+    /** Allows tapping a suggestion to fill the EditText. */
+    private void setupSuggestionClickListener() {
+        suggestionsAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(MyItem item) {
+                etGuess.setText(item.getCountry());
+                etGuess.setSelection(item.getCountry().length());
+                recyclerViewSuggestions.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    /** Updates the suggestion list live while the user types. */
+    private void setupTextWatcher() {
+        etGuess.addTextChangedListener(new TextWatcher() {
+
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateSuggestions(s.toString().trim());
+            }
+
+            @Override public void afterTextChanged(Editable s) {}
+        });
+    }
+
+    /** Updates suggestions shown below the EditText. */
+    private void updateSuggestions(String input) {
         suggestions.clear();
 
         if (input.isEmpty()) {
-            // hide suggestions when input is empty
-            suggestionsAdapter.updateList(new ArrayList<MyItem>());
+            suggestionsAdapter.updateList(new ArrayList<>());
             recyclerViewSuggestions.setVisibility(View.GONE);
             return;
         }
 
         String lower = input.toLowerCase();
-        for (MyItem mi : allCountries) {
-            if (mi.getCountry().toLowerCase().startsWith(lower)) { // startsWith requirement
-                suggestions.add(mi);
+
+        for (MyItem item : allCountries) {
+            if (item.getCountry().toLowerCase().startsWith(lower)) {
+                suggestions.add(item);
             }
         }
 
-        // update suggestions adapter (replace list)
-        suggestionsAdapter.updateList(new ArrayList<MyItem>(suggestions));
+        suggestionsAdapter.updateList(new ArrayList<>(suggestions));
 
-        // show or hide suggestions view
         if (suggestions.isEmpty()) {
             recyclerViewSuggestions.setVisibility(View.GONE);
         } else {
@@ -251,7 +150,76 @@ public class ActivityGame extends AppCompatActivity {
         }
     }
 
-    @Override*/
-    //public void afterTextChanged(Editable s) { /* no-op */ }
-    //}
+    /** Handles the AI Hint button popup. */
+    private void setupAiHelpButton() {
+        btnAiHelp.setOnClickListener(v -> {
+            new AlertDialog.Builder(ActivityGame.this)
+                    .setTitle("Are you sure you want to use a hint?")
+                    .setMessage("It will hurt your statistics")
+                    .setPositiveButton("Yes", (dialog, which) -> { /* TODO AI help */ })
+                    .setNegativeButton("No", null)
+                    .show();
+        });
+    }
+
+    /** Handles the Enter button → adds selected country to guessed list. */
+    private void setupEnterCountryButton() {
+        btnEnterCountry.setOnClickListener(v -> {
+            String countryText = etGuess.getText().toString().trim();
+
+            if (countryText.isEmpty()) {
+                Toast.makeText(this, "Please enter a country", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            MyItem found = findCountry(countryText);
+            if (found == null) {
+                Toast.makeText(this, "Country not found", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (isAlreadyGuessed(found)) {
+                Toast.makeText(this, "Already guessed", Toast.LENGTH_SHORT).show();
+                etGuess.setText("");
+                recyclerViewSuggestions.setVisibility(View.GONE);
+                return;
+            }
+
+            adapter.addItem(found);
+            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+
+            etGuess.setText("");
+            suggestionsAdapter.updateList(new ArrayList<>());
+            recyclerViewSuggestions.setVisibility(View.GONE);
+        });
+    }
+
+    /** Finds matching country (case-insensitive). Returns null if not found. */
+    private MyItem findCountry(String name) {
+        MyItem found = MyItemData.getCountryInfo(name);
+
+        boolean isUnknown =
+                found.getContinent().equals("Unknown") &&
+                        found.getReligion().equals("Unknown") &&
+                        found.getPopulation().equals("Unknown");
+
+        if (!isUnknown) return found;
+
+        for (MyItem item : allCountries) {
+            if (item.getCountry().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    /** Checks if the user already guessed this country. */
+    private boolean isAlreadyGuessed(MyItem item) {
+        for (MyItem mi : guessedCountries) {
+            if (mi.getCountry().equalsIgnoreCase(item.getCountry())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
