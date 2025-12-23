@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,12 +63,9 @@ public class ActivityGame extends AppCompatActivity {
         setupEnterCountryButton();
         chooseRandomCountry();
 
-        //if the user guessed correctly switches to the statistics screen(not final version of this "if" need to add more logic)
-        if(isLastGuessCorrect()){
-            Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
-            startActivity(intent);
-            finish();
-        }
+        Log.d("guessed country", "correct country: "+randomCountry.getCountry());
+
+
     }
 
 
@@ -164,45 +162,59 @@ public class ActivityGame extends AppCompatActivity {
 
     /** Handles the AI Hint button popup. */
     private void setupAiHelpButton() {
-        btnAiHelp.setOnClickListener(v -> {
-            new AlertDialog.Builder(ActivityGame.this)
-                    .setTitle("Are you sure you want to use a hint?")
-                    .setMessage("It will hurt your statistics")
-                    .setPositiveButton("Yes", (dialog, which) -> { /* TODO AI help */ })
-                    .setNegativeButton("No", null)
-                    .show();
+        btnAiHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(ActivityGame.this)
+                        .setTitle("Are you sure you want to use a hint?")
+                        .setMessage("It will hurt your statistics")
+                        .setPositiveButton("Yes", (dialog, which) -> { /* TODO AI help */ })
+                        .setNegativeButton("No", null)
+                        .show();
+            }
         });
     }
 
     /** Handles the Enter button → adds selected country to guessed list. */
     private void setupEnterCountryButton() {
-        btnEnterCountry.setOnClickListener(v -> {
-            String countryText = etGuess.getText().toString().trim();
+        btnEnterCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    String countryText = etGuess.getText().toString().trim();
 
-            if (countryText.isEmpty()) {
-                Toast.makeText(this, "Please enter a country", Toast.LENGTH_SHORT).show();
-                return;
-            }
+                    if (countryText.isEmpty()) {
+                        Toast.makeText(ActivityGame.this, "Please enter a country", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-            MyItem found = findCountry(countryText);
-            if (found == null) {
-                Toast.makeText(this, "Country not found", Toast.LENGTH_SHORT).show();
-                return;
-            }
+                    MyItem found = findCountry(countryText);
+                    if (found == null) {
+                        Toast.makeText(ActivityGame.this, "Country not found", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-            if (isAlreadyGuessed(found)) {
-                Toast.makeText(this, "Already guessed", Toast.LENGTH_SHORT).show();
-                etGuess.setText("");
-                recyclerViewSuggestions.setVisibility(View.GONE);
-                return;
-            }
+                    if (isAlreadyGuessed(found)) {
+                        Toast.makeText(ActivityGame.this, "Already guessed", Toast.LENGTH_SHORT).show();
+                        etGuess.setText("");
+                        recyclerViewSuggestions.setVisibility(View.GONE);
+                        return;
+                    }
 
-            adapter.addItem(found);
-            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                    adapter.addItem(found);
+                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
 
-            etGuess.setText("");
-            suggestionsAdapter.updateList(new ArrayList<>());
-            recyclerViewSuggestions.setVisibility(View.GONE);
+                    etGuess.setText("");
+                    suggestionsAdapter.updateList(new ArrayList<>());
+                    recyclerViewSuggestions.setVisibility(View.GONE);
+
+                    //if the user guessed correctly switches to the statistics screen(not final version of this "if" need to add more logic)
+                    if(isLastGuessCorrect()){
+                        Toast.makeText(ActivityGame.this, "guessed right", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
         });
     }
 
