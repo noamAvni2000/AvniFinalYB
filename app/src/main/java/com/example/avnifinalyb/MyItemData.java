@@ -166,16 +166,6 @@ public class MyItemData {
     }
 
 
-        //returns an array of only the countries without their information
-    /*public static String[] getCountries(){
-            String[] countries = new String[data.size()];
-            for(int i=0; i< data.size(); i++) {
-                countries[i]=data[i].getCountry();
-            }
-            return countries;
-    }*/
-
-
 }
 
 

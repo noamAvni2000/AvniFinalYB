@@ -1,7 +1,9 @@
 package com.example.avnifinalyb;
 
+import static com.example.avnifinalyb.MyItemData.GetRandomCountry;
 import static com.example.avnifinalyb.MyItemData.getItems;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,6 +38,8 @@ public class ActivityGame extends AppCompatActivity {
     ArrayList<MyItem> guessedCountries;
     ArrayList<MyItem> suggestions;
 
+    private MyItem randomCountry;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +60,20 @@ public class ActivityGame extends AppCompatActivity {
         setupTextWatcher();
         setupAiHelpButton();
         setupEnterCountryButton();
+        chooseRandomCountry();
+
+        //if the user guessed correctly switches to the statistics screen(not final version of this "if" need to add more logic)
+        if(isLastGuessCorrect()){
+            Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
+            startActivity(intent);
+            finish();
+        }
     }
+
 
     // --------------------------------------------------------------------
     // FUNCTIONS
     // --------------------------------------------------------------------
-
 
     /** Connects UI elements (findViewById for all views). */
     private void connectUiElements() {
@@ -222,4 +234,26 @@ public class ActivityGame extends AppCompatActivity {
         }
         return false;
     }
+
+    ///assigns a random country that will be the country needed to be guessed
+    private void chooseRandomCountry(){
+        randomCountry=GetRandomCountry();
+    }
+
+    ///compares the last guessed country with the random country return true if match return false if
+    ///  doesnt match/there is no random country/no country was guessed yet
+    private boolean isLastGuessCorrect() {
+
+        // אם אין ניחושים או שאין מדינה רנדומלית
+        if (guessedCountries.isEmpty() || randomCountry == null) {
+            return false;
+        }
+
+        // הניחוש האחרון
+        MyItem lastGuessed = guessedCountries.get(guessedCountries.size() - 1);
+
+        // השוואה לפי שם המדינה (לא רגיש לאותיות)
+        return lastGuessed.getCountry().equalsIgnoreCase(randomCountry.getCountry());
+    }
+
 }
