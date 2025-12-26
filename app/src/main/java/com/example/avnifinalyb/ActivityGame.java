@@ -62,6 +62,7 @@ public class ActivityGame extends AppCompatActivity {
         setupAiHelpButton();
         setupEnterCountryButton();
         chooseRandomCountry();
+        adapter.setTargetCountry(randomCountry);//sets the random country chosen as the adapters target country
 
         Log.d("guessed country", "correct country: "+randomCountry.getCountry());
 
@@ -216,6 +217,7 @@ public class ActivityGame extends AppCompatActivity {
                     }
                 }
         });
+        Log.d("some crash", "did we reach the end of the btnClickListener?");
     }
 
     /** Finds matching country (case-insensitive). Returns null if not found. */
@@ -267,5 +269,43 @@ public class ActivityGame extends AppCompatActivity {
         // השוואה לפי שם המדינה (לא רגיש לאותיות)
         return lastGuessed.getCountry().equalsIgnoreCase(randomCountry.getCountry());
     }
+
+    /// compares the poplation of the target country and guessed country and returns input based
+    /// on the result of the comparison
+    private String comparePopulation(MyItem guess, MyItem target) {
+        int guessPop = parsePopulation(guess.getPopulation());
+        int targetPop = parsePopulation(target.getPopulation());
+
+        if (guessPop > targetPop) return "More";
+        if (guessPop < targetPop) return "Less";
+        return "Same";
+    }
+
+    ///makes the short of million(M) to number
+    private int parsePopulation(String pop) {
+        if (pop.endsWith("M")) {
+            return Integer.parseInt(pop.replace("M", "")) * 1_000_000;
+        }
+        return 0;
+    }
+
+    /// compares the continents of the target country and the guessed country returns input based
+    /// on the result of the comparison
+    private String compareContinent(MyItem guess, MyItem target) {
+        if (guess.getContinent().equalsIgnoreCase(target.getContinent())) {
+            return "Same";
+        }
+        return "Different";
+    }
+
+    /// compares if the target country and the guessed country are landlocked the same way and
+    /// returns input based on the result of the comparison
+    private String compareLandLocked(MyItem guess, MyItem target) {
+        if (guess.getLandLocked().equalsIgnoreCase(target.getLandLocked())) {
+            return "Same";
+        }
+        return "Different";
+    }
+
 
 }

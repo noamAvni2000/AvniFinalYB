@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private ArrayList<MyItem> itemList;
+    private MyItem targetCountry;
+
 
     public MyAdapter(ArrayList<MyItem> itemList) {
         this.itemList = itemList;
@@ -33,20 +35,54 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        MyItem item = itemList.get(position);
+        MyItem guessed = itemList.get(position);
 
-        holder.tvCountry.setText(item.getCountry());
-        holder.tvContinent.setText(item.getContinent());
-        holder.tvReligion.setText(item.getReligion());
-        holder.tvLandLocked.setText(item.getLandLocked());
-        holder.tvHasNoam.setText(item.getHasNoam());
-        holder.tvPopulation.setText(item.getPopulation());
+        holder.tvCountry.setText(guessed.getCountry());
 
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) listener.onItemClick(item);
-        });
+        if (targetCountry != null) {
+            holder.tvContinent.setText(
+                    guessed.getContinent().equalsIgnoreCase(targetCountry.getContinent())
+                            ? "Same"
+                            : "Different"
+            );
 
+            holder.tvReligion.setText(
+                    guessed.getReligion().equalsIgnoreCase(targetCountry.getReligion())
+                            ? "Same"
+                            : "Different"
+            );
+
+            holder.tvLandLocked.setText(
+                    guessed.getLandLocked().equalsIgnoreCase(targetCountry.getLandLocked())
+                            ? "Same"
+                            : "Different"
+            );
+
+            holder.tvPopulation.setText(
+                    comparePopulationText(guessed, targetCountry)
+            );
+        }
     }
+
+    /// a helper function for the onBindViewHolder compares the population of the 2 countries
+    /// and returns more if the guessed country has more people, less if less and else same
+    private String comparePopulationText(MyItem guess, MyItem target) {
+        int g = parsePop(guess.getPopulation());
+        int t = parsePop(target.getPopulation());
+
+        if (g > t) return "More";
+        if (g < t) return "Less";
+        return "Same";
+    }
+
+    private int parsePop(String pop) {
+        if (pop.endsWith("M")) {
+            return Integer.parseInt(pop.replace("M", "")) * 1_000_000;
+        }
+        return 0;
+    }
+
+
 
     @Override
     public int getItemCount() {
@@ -83,6 +119,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
+
+    public void setTargetCountry(MyItem targetCountry) {
+        this.targetCountry = targetCountry;
+    }
+
 
 }
 
