@@ -3,6 +3,7 @@ package com.example.avnifinalyb;
 import static com.example.avnifinalyb.MyItemData.GetRandomCountry;
 import static com.example.avnifinalyb.MyItemData.getItems;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -210,10 +211,29 @@ public class ActivityGame extends AppCompatActivity {
 
                     //if the user guessed correctly switches to the statistics screen(not final version of this "if" need to add more logic)
                     if(isLastGuessCorrect()){
-                        Toast.makeText(ActivityGame.this, "guessed right", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
-                        startActivity(intent);
-                        finish();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityGame.this);
+                        builder.setTitle("You won!");
+                        builder.setMessage("What would you like to do now?");
+
+                        // כפתור לאתחול המשחק
+                        builder.setPositiveButton("Reset game", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                restartGame();
+                            }
+                        });
+
+                        // כפתור לעבור למסך אחר
+                        builder.setNegativeButton("View statistics", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
+                                startActivity(intent);
+                                finish(); // אם רוצים לסגור את המסך הנוכחי
+                            }
+                        });
+
+                        builder.show();
                     }
                 }
         });
@@ -305,6 +325,17 @@ public class ActivityGame extends AppCompatActivity {
             return "Same";
         }
         return "Different";
+    }
+
+    /// resets the game if the user decides to play again
+    private void restartGame() {
+        guessedCountries.clear();
+        adapter.notifyDataSetChanged();
+
+        randomCountry = MyItemData.GetRandomCountry();
+        adapter.setTargetCountry(randomCountry);
+
+        etGuess.setText("");
     }
 
 

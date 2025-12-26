@@ -1,5 +1,6 @@
 package com.example.avnifinalyb;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.tvPopulation.setText(
                     comparePopulationText(guessed, targetCountry)
             );
+
+            String popResult = comparePopulationText(guessed, targetCountry);
+            setResultText(holder.tvPopulation, popResult);
         }
     }
 
@@ -70,9 +74,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         int g = parsePop(guess.getPopulation());
         int t = parsePop(target.getPopulation());
 
-        if (g > t) return "More";
-        if (g < t) return "Less";
-        return "Same";
+        if (g > t) return "↑";
+        if (g < t) return "↓";
+        return "✓";
     }
 
     private int parsePop(String pop) {
@@ -123,6 +127,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void setTargetCountry(MyItem targetCountry) {
         this.targetCountry = targetCountry;
     }
+
+    /// checks what the text returned is, and sets a color based on the result
+    private void setResultText(TextView tv, String text) {
+        tv.setText(text);
+
+        if (text.equals("Same")) {
+            tv.setTextColor(Color.GREEN);
+        } else if (text.equals("Different")) {
+            tv.setTextColor(Color.RED);
+        } else {
+            tv.setTextColor(Color.parseColor("#FFA500")); // כתום
+        }
+    }
+
 
 
 }
