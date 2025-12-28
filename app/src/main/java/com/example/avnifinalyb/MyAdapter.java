@@ -81,7 +81,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private int parsePop(String pop) {
         if (pop.endsWith("M")) {
-            return Integer.parseInt(pop.replace("M", "")) * 1_000_000;
+            return (int)(Double.parseDouble(pop.replace("M", "")) * 1_000_000);
         }
         return 0;
     }

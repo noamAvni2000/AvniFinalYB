@@ -54,15 +54,25 @@ public class ActivityGame extends AppCompatActivity {
             return insets;
         });
 
+        Log.d("debug attempt", "-7");
         connectUiElements();
+        Log.d("debug attempt", "-6");
         loadDataLists();
+        Log.d("debug attempt", "-5");
         setupSuggestionAdapter();
+        Log.d("debug attempt", "-4");
         setupGuessedAdapter();
+        Log.d("debug attempt", "-3");
         setupSuggestionClickListener();
+        Log.d("debug attempt", "-2");
         setupTextWatcher();
+        Log.d("debug attempt", "-1");
         setupAiHelpButton();
+        Log.d("debug attempt", "0");
         setupEnterCountryButton();
+        Log.d("debug attempt", "0.1");
         chooseRandomCountry();
+        Log.d("debug attempt", "0.2");
         adapter.setTargetCountry(randomCountry);//sets the random country chosen as the adapters target country
 
         Log.d("guessed country", "correct country: "+randomCountry.getCountry());
@@ -170,7 +180,10 @@ public class ActivityGame extends AppCompatActivity {
                 new AlertDialog.Builder(ActivityGame.this)
                         .setTitle("Are you sure you want to use a hint?")
                         .setMessage("It will hurt your statistics")
-                        .setPositiveButton("Yes", (dialog, which) -> { /* TODO AI help */ })
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) { /* TODO AI help */ }
+                        })
                         .setNegativeButton("No", null)
                         .show();
             }
@@ -183,38 +196,40 @@ public class ActivityGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                     String countryText = etGuess.getText().toString().trim();
-
+                Log.d("debug attempt", "1");
                     if (countryText.isEmpty()) {
                         Toast.makeText(ActivityGame.this, "Please enter a country", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
+                Log.d("debug attempt", "2");
                     MyItem found = findCountry(countryText);
                     if (found == null) {
                         Toast.makeText(ActivityGame.this, "Country not found", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
+                Log.d("debug attempt", "3");
                     if (isAlreadyGuessed(found)) {
                         Toast.makeText(ActivityGame.this, "Already guessed", Toast.LENGTH_SHORT).show();
                         etGuess.setText("");
                         recyclerViewSuggestions.setVisibility(View.GONE);
                         return;
                     }
-
+                Log.d("debug attempt", "4");
                     adapter.addItem(found);
+                Log.d("debug attempt", "5");
                     recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-
+                Log.d("debug attempt", "6");
                     etGuess.setText("");
                     suggestionsAdapter.updateList(new ArrayList<>());
                     recyclerViewSuggestions.setVisibility(View.GONE);
-
+                Log.d("debug attempt", "7");
                     //if the user guessed correctly switches to the statistics screen(not final version of this "if" need to add more logic)
                     if(isLastGuessCorrect()){
                         AlertDialog.Builder builder = new AlertDialog.Builder(ActivityGame.this);
                         builder.setTitle("You won!");
                         builder.setMessage("What would you like to do now?");
 
+                        Log.d("debug attempt", "8");
                         // כפתור לאתחול המשחק
                         builder.setPositiveButton("Reset game", new DialogInterface.OnClickListener() {
                             @Override
@@ -222,19 +237,20 @@ public class ActivityGame extends AppCompatActivity {
                                 restartGame();
                             }
                         });
-
+                        Log.d("debug attempt", "9");
                         // כפתור לעבור למסך אחר
                         builder.setNegativeButton("View statistics", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
                                 startActivity(intent);
-                                finish(); // אם רוצים לסגור את המסך הנוכחי
+                                finish();
                             }
                         });
-
+                        Log.d("debug attempt", "10");
                         builder.show();
                     }
+                Log.d("debug attempt", "11");
                 }
         });
         Log.d("some crash", "did we reach the end of the btnClickListener?");
