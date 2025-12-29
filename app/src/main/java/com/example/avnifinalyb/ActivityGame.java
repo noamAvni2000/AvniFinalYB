@@ -33,7 +33,8 @@ public class ActivityGame extends AppCompatActivity {
     Button btnEnterCountry, btnAiHelp;
     TextView tvGame;
     RecyclerView recyclerView, recyclerViewSuggestions;
-    MyAdapter adapter, suggestionsAdapter;
+    MyAdapter adapter;
+    SuggestionAdapter suggestionsAdapter;
 
     // Data lists
     ArrayList<MyItem> allCountries;
@@ -54,25 +55,15 @@ public class ActivityGame extends AppCompatActivity {
             return insets;
         });
 
-        Log.d("debug attempt", "-7");
         connectUiElements();
-        Log.d("debug attempt", "-6");
         loadDataLists();
-        Log.d("debug attempt", "-5");
         setupSuggestionAdapter();
-        Log.d("debug attempt", "-4");
         setupGuessedAdapter();
-        Log.d("debug attempt", "-3");
         setupSuggestionClickListener();
-        Log.d("debug attempt", "-2");
         setupTextWatcher();
-        Log.d("debug attempt", "-1");
         setupAiHelpButton();
-        Log.d("debug attempt", "0");
         setupEnterCountryButton();
-        Log.d("debug attempt", "0.1");
         chooseRandomCountry();
-        Log.d("debug attempt", "0.2");
         adapter.setTargetCountry(randomCountry);//sets the random country chosen as the adapters target country
 
         Log.d("guessed country", "correct country: "+randomCountry.getCountry());
@@ -105,7 +96,7 @@ public class ActivityGame extends AppCompatActivity {
 
     /** Sets up the RecyclerView that shows typing suggestions. */
     private void setupSuggestionAdapter() {
-        suggestionsAdapter = new MyAdapter(suggestions);
+        suggestionsAdapter = new SuggestionAdapter(suggestions);
         recyclerViewSuggestions.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewSuggestions.setAdapter(suggestionsAdapter);
         recyclerViewSuggestions.setVisibility(View.GONE);
@@ -120,7 +111,7 @@ public class ActivityGame extends AppCompatActivity {
 
     /** Allows tapping a suggestion to fill the EditText. */
     private void setupSuggestionClickListener() {
-        suggestionsAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+        suggestionsAdapter.setOnItemClickListener(new SuggestionAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MyItem item) {
                 etGuess.setText(item.getCountry());
@@ -196,40 +187,32 @@ public class ActivityGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                     String countryText = etGuess.getText().toString().trim();
-                Log.d("debug attempt", "1");
                     if (countryText.isEmpty()) {
                         Toast.makeText(ActivityGame.this, "Please enter a country", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                Log.d("debug attempt", "2");
                     MyItem found = findCountry(countryText);
                     if (found == null) {
                         Toast.makeText(ActivityGame.this, "Country not found", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                Log.d("debug attempt", "3");
                     if (isAlreadyGuessed(found)) {
                         Toast.makeText(ActivityGame.this, "Already guessed", Toast.LENGTH_SHORT).show();
                         etGuess.setText("");
                         recyclerViewSuggestions.setVisibility(View.GONE);
                         return;
                     }
-                Log.d("debug attempt", "4");
                     adapter.addItem(found);
-                Log.d("debug attempt", "5");
                     recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                Log.d("debug attempt", "6");
                     etGuess.setText("");
                     suggestionsAdapter.updateList(new ArrayList<>());
                     recyclerViewSuggestions.setVisibility(View.GONE);
-                Log.d("debug attempt", "7");
                     //if the user guessed correctly switches to the statistics screen(not final version of this "if" need to add more logic)
                     if(isLastGuessCorrect()){
                         AlertDialog.Builder builder = new AlertDialog.Builder(ActivityGame.this);
                         builder.setTitle("You won!");
                         builder.setMessage("What would you like to do now?");
 
-                        Log.d("debug attempt", "8");
                         // כפתור לאתחול המשחק
                         builder.setPositiveButton("Reset game", new DialogInterface.OnClickListener() {
                             @Override
@@ -237,7 +220,6 @@ public class ActivityGame extends AppCompatActivity {
                                 restartGame();
                             }
                         });
-                        Log.d("debug attempt", "9");
                         // כפתור לעבור למסך אחר
                         builder.setNegativeButton("View statistics", new DialogInterface.OnClickListener() {
                             @Override
@@ -247,13 +229,10 @@ public class ActivityGame extends AppCompatActivity {
                                 finish();
                             }
                         });
-                        Log.d("debug attempt", "10");
                         builder.show();
                     }
-                Log.d("debug attempt", "11");
                 }
         });
-        Log.d("some crash", "did we reach the end of the btnClickListener?");
     }
 
     /** Finds matching country (case-insensitive). Returns null if not found. */
@@ -304,43 +283,6 @@ public class ActivityGame extends AppCompatActivity {
 
         // השוואה לפי שם המדינה (לא רגיש לאותיות)
         return lastGuessed.getCountry().equalsIgnoreCase(randomCountry.getCountry());
-    }
-
-    /// compares the poplation of the target country and guessed country and returns input based
-    /// on the result of the comparison
-    private String comparePopulation(MyItem guess, MyItem target) {
-        int guessPop = parsePopulation(guess.getPopulation());
-        int targetPop = parsePopulation(target.getPopulation());
-
-        if (guessPop > targetPop) return "More";
-        if (guessPop < targetPop) return "Less";
-        return "Same";
-    }
-
-    ///makes the short of million(M) to number
-    private int parsePopulation(String pop) {
-        if (pop.endsWith("M")) {
-            return Integer.parseInt(pop.replace("M", "")) * 1_000_000;
-        }
-        return 0;
-    }
-
-    /// compares the continents of the target country and the guessed country returns input based
-    /// on the result of the comparison
-    private String compareContinent(MyItem guess, MyItem target) {
-        if (guess.getContinent().equalsIgnoreCase(target.getContinent())) {
-            return "Same";
-        }
-        return "Different";
-    }
-
-    /// compares if the target country and the guessed country are landlocked the same way and
-    /// returns input based on the result of the comparison
-    private String compareLandLocked(MyItem guess, MyItem target) {
-        if (guess.getLandLocked().equalsIgnoreCase(target.getLandLocked())) {
-            return "Same";
-        }
-        return "Different";
     }
 
     /// resets the game if the user decides to play again

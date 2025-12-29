@@ -39,29 +39,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         MyItem guessed = itemList.get(position);
 
         holder.tvCountry.setText(guessed.getCountry());
+        holder.tvCountry.setTextColor(Color.parseColor("#FFD700")); // Golden color
 
         if (targetCountry != null) {
-            holder.tvContinent.setText(
-                    guessed.getContinent().equalsIgnoreCase(targetCountry.getContinent())
-                            ? "Same"
-                            : "Different"
-            );
+            String continentResult = guessed.getContinent().equalsIgnoreCase(targetCountry.getContinent())
+                    ? "Same"
+                    : "Different";
+            setResultText(holder.tvContinent, continentResult);
 
-            holder.tvReligion.setText(
-                    guessed.getReligion().equalsIgnoreCase(targetCountry.getReligion())
-                            ? "Same"
-                            : "Different"
-            );
+            String religionResult = guessed.getReligion().equalsIgnoreCase(targetCountry.getReligion())
+                    ? "Same"
+                    : "Different";
+            setResultText(holder.tvReligion, religionResult);
 
-            holder.tvLandLocked.setText(
-                    guessed.getLandLocked().equalsIgnoreCase(targetCountry.getLandLocked())
-                            ? "Same"
-                            : "Different"
-            );
+            String landLockedResult = guessed.getLandLocked().equalsIgnoreCase(targetCountry.getLandLocked())
+                    ? "Same"
+                    : "Different";
+            setResultText(holder.tvLandLocked, landLockedResult);
 
-            holder.tvPopulation.setText(
-                    comparePopulationText(guessed, targetCountry)
-            );
+            String hasNoamResult = guessed.getHasNoam().equalsIgnoreCase(targetCountry.getHasNoam())
+                    ? "Same"
+                    : "Different";
+            setResultText(holder.tvHasNoam, hasNoamResult);
 
             String popResult = comparePopulationText(guessed, targetCountry);
             setResultText(holder.tvPopulation, popResult);
@@ -71,17 +70,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     /// a helper function for the onBindViewHolder compares the population of the 2 countries
     /// and returns more if the guessed country has more people, less if less and else same
     private String comparePopulationText(MyItem guess, MyItem target) {
-        int g = parsePop(guess.getPopulation());
-        int t = parsePop(target.getPopulation());
+        long g = parsePop(guess.getPopulation());
+        long t = parsePop(target.getPopulation());
 
         if (g > t) return "↑";
         if (g < t) return "↓";
         return "✓";
     }
 
-    private int parsePop(String pop) {
+    private long parsePop(String pop) {
+        if (pop.endsWith("B")) {
+            return (long) (Double.parseDouble(pop.replace("B", "")) * 1_000_000_000);
+        }
         if (pop.endsWith("M")) {
-            return (int)(Double.parseDouble(pop.replace("M", "")) * 1_000_000);
+            return (long) (Double.parseDouble(pop.replace("M", "")) * 1_000_000);
         }
         return 0;
     }
@@ -144,4 +146,3 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
 
 }
-
