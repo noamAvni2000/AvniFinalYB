@@ -26,6 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.os.Handler;
+import android.widget.ImageView;
+
 
 public class ActivityGame extends AppCompatActivity {
 
@@ -43,6 +46,12 @@ public class ActivityGame extends AppCompatActivity {
 
     private MyItem randomCountry;
 
+    // משתנים גלובליים - זמינים לכל המתודות
+    private Handler handler;
+    private Runnable runAnimation;
+    private ImageView confetti;
+    private float scale = 1.0f;  // גודל התחלתי
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +65,23 @@ public class ActivityGame extends AppCompatActivity {
         });
 
         connectUiElements();
+
+        handler = new Handler();
+        runAnimation = new Runnable() {
+            @Override
+            public void run() {
+                // שלב 1: שנה את הגודל
+                scale = scale + 0.02f;  // הגדל ב-2%
+
+                // שלב 2: עדכן את התצוגה
+                confetti.setScaleX(scale);
+                confetti.setScaleY(scale);
+
+                // שלב 3: תזמן את הפעם הבאה
+                handler.postDelayed(this, 30);
+            }
+        };
+
         loadDataLists();
         setupSuggestionAdapter();
         setupGuessedAdapter();
@@ -72,9 +98,9 @@ public class ActivityGame extends AppCompatActivity {
     }
 
 
-    // --------------------------------------------------------------------
+    // ---------------------------------------------------------------------
     // FUNCTIONS
-    // --------------------------------------------------------------------
+    // ---------------------------------------------------------------------
 
     /** Connects UI elements (findViewById for all views). */
     private void connectUiElements() {
@@ -84,6 +110,7 @@ public class ActivityGame extends AppCompatActivity {
         tvGame = findViewById(R.id.tvGame);
         recyclerViewSuggestions = findViewById(R.id.recyclerViewSuggestions);
         recyclerView = findViewById(R.id.recyclerView);
+        confetti = findViewById(R.id.confetti);
     }
 
     /** Loads the full dataset and initializes working lists. */
@@ -207,29 +234,41 @@ public class ActivityGame extends AppCompatActivity {
                     etGuess.setText("");
                     suggestionsAdapter.updateList(new ArrayList<>());
                     recyclerViewSuggestions.setVisibility(View.GONE);
-                    //if the user guessed correctly switches to the statistics screen(not final version of this "if" need to add more logic)
-                    if(isLastGuessCorrect()){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityGame.this);
-                        builder.setTitle("You won!");
-                        builder.setMessage("What would you like to do now?");
 
-                        // כפתור לאתחול המשחק
-                        builder.setPositiveButton("Reset game", new DialogInterface.OnClickListener() {
+                    if(isLastGuessCorrect()){
+                        confetti.setVisibility(View.VISIBLE);
+                        scale = 1.0f; // Reset scale before starting
+                        handler.post(runAnimation);
+
+                        new Handler().postDelayed(new Runnable() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                restartGame();
+                            public void run() {
+                                handler.removeCallbacks(runAnimation);
+                                confetti.setVisibility(View.GONE);
+
+                                if (!isFinishing()) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityGame.this);
+                                    builder.setTitle("You won!");
+                                    builder.setMessage("What would you like to do now?");
+
+                                    builder.setPositiveButton("Reset game", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            restartGame();
+                                        }
+                                    });
+                                    builder.setNegativeButton("View statistics", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                                    builder.show();
+                                }
                             }
-                        });
-                        // כפתור לעבור למסך אחר
-                        builder.setNegativeButton("View statistics", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
-                        builder.show();
+                        }, 5000); // 5 seconds
                     }
                 }
         });
