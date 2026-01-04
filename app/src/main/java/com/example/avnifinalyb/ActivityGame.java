@@ -152,7 +152,12 @@ public class ActivityGame extends AppCompatActivity {
         btnAiHelp.setOnClickListener(v -> new AlertDialog.Builder(ActivityGame.this)
                 .setTitle("Are you sure you want to use a hint?")
                 .setMessage("It will hurt your statistics")
-                .setPositiveButton("Yes", (dialog, which) -> { /* TODO AI help */ })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
                 .setNegativeButton("No", null)
                 .show());
     }
