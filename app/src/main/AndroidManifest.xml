@@ -8,6 +8,7 @@
         android:name="android.permission.FOREGROUND_SERVICE"
         android:foregroundServiceType="mediaPlayback" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"

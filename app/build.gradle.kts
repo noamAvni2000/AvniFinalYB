@@ -1,3 +1,10 @@
+/*import java.util.Properties
+// קריאת המפתח מ‑local.properties
+val localProps = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
+val apiKey = localProps.getProperty("GOOGLE_API_KEY") ?: ""*/
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -35,6 +42,7 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation(libs.google.generativeai) // SDK רשמי ל‑Gemini
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
