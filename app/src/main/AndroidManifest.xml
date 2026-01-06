@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AvniFinalYB"
         tools:targetApi="31">
+        <service
+            android:name=".MyWinAudioService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback"></service>
+
         <activity
             android:name=".ActivityStatistics"
             android:exported="false" />
@@ -37,8 +43,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>

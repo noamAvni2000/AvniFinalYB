@@ -193,6 +193,10 @@ public class ActivityGame extends AppCompatActivity {
     }
 
     private void playWinAnimation() {
+        Intent playIntent = new Intent(this, MyWinAudioService.class);
+        playIntent.setAction(MyWinAudioService.ACTION_PLAY);
+        startService(playIntent);
+
         // Use a built-in Android icon for a definitive test
         confetti.setImageResource(android.R.drawable.btn_star_big_on);
         confetti.bringToFront();
@@ -218,6 +222,11 @@ public class ActivityGame extends AppCompatActivity {
             handler.removeCallbacks(animationRunnable);
             confetti.setVisibility(View.GONE);
             tvWinMessage.setVisibility(View.GONE);
+
+            Intent stopIntent = new Intent(this, MyWinAudioService.class);
+            stopIntent.setAction(MyWinAudioService.ACTION_STOP);
+            startService(stopIntent);
+
             if (!isFinishing()) {
                 showWinDialog();
             }

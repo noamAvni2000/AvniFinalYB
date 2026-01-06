@@ -12,7 +12,7 @@ public class GameLogic {
     //static bool CheckIfRight(MyItem guessedCountry, MyItem rightCountry); vvvvvv(in the ActivityGame)
 
     //הפעולה מקבלת את המדינה הנכונה והמדינה שהמשתמש ניחש, ומממירה את זה לשדות תצוגה על המסך(לדומגא במדינה שנוחשה יש פחות/יותר אנשים גובלת בים וכו...)
-    //static void makeGuessTo(MyItem rightCountry, MyItem guessedCountry);
+    //static void makeGuessTo(MyItem rightCountry, MyItem guessedCountry); vvvvvv(in the ActivityGame)
 
     //static void? fillTheGuess( vvvvvvvvvvvvvvvv (is in the ActivityGame)
 
