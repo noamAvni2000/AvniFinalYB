@@ -1,9 +1,9 @@
-/*import java.util.Properties
+import java.util.Properties
 // קריאת המפתח מ‑local.properties
 val localProps = Properties().apply {
     load(rootProject.file("local.properties").inputStream())
 }
-val apiKey = localProps.getProperty("GOOGLE_API_KEY") ?: ""*/
+val apiKey = localProps.getProperty("GOOGLE_API_KEY") ?: ""
 
 plugins {
     alias(libs.plugins.android.application)
@@ -21,6 +21,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // חשיפת המפתח לקוד Java כ‑BuildConfig.GOOGLE_API_KEY
+        buildConfigField("String", "GOOGLE_API_KEY", "\"$apiKey\"")
+        // חלופה (ללא BuildConfig):
+        // resValue("string", "google_api_key", apiKey)
     }
 
     buildTypes {
@@ -35,6 +40,11 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    // ⚠️ נדרש אם משתמשים ב‑buildConfigField
+    buildFeatures {
+        buildConfig = true
     }
 }
 
