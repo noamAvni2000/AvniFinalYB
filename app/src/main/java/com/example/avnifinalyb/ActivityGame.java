@@ -1,7 +1,5 @@
 package com.example.avnifinalyb;
 
-import static com.example.avnifinalyb.MyItemData.GetRandomCountry;
-import static com.example.avnifinalyb.MyItemData.getItems;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,6 +49,9 @@ public class ActivityGame extends AppCompatActivity {
     private Runnable animationRunnable;
     private float scale = 1.0f;
 
+    private MyItemData myItemData=new MyItemData();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +90,7 @@ public class ActivityGame extends AppCompatActivity {
     }
 
     private void loadDataLists() {
-        List<MyItem> fromData = getItems();
+        List<MyItem> fromData = myItemData.getItems();
         allCountries = new ArrayList<>(fromData);
         guessedCountries = new ArrayList<>();
         suggestions = new ArrayList<>();
@@ -155,7 +156,9 @@ public class ActivityGame extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        Intent intent = new Intent(ActivityGame.this, ActivityAi.class);
+                        startActivity(intent);
+                        finish();
                     }
                 })
                 .setNegativeButton("No", null)
@@ -248,7 +251,7 @@ public class ActivityGame extends AppCompatActivity {
     }
 
     private MyItem findCountry(String name) {
-        MyItem found = MyItemData.getCountryInfo(name);
+        MyItem found = myItemData.getCountryInfo(name);
         boolean isUnknown = found.getContinent().equals("Unknown") &&
                 found.getReligion().equals("Unknown") &&
                 found.getPopulation().equals("Unknown");
@@ -271,7 +274,7 @@ public class ActivityGame extends AppCompatActivity {
     }
 
     private void chooseRandomCountry() {
-        randomCountry = GetRandomCountry();
+        randomCountry = myItemData.getRandomCountry();
     }
 
     private boolean isLastGuessCorrect() {
@@ -285,7 +288,7 @@ public class ActivityGame extends AppCompatActivity {
     private void restartGame() {
         guessedCountries.clear();
         adapter.notifyDataSetChanged();
-        randomCountry = MyItemData.GetRandomCountry();
+        randomCountry = myItemData.getRandomCountry();
         adapter.setTargetCountry(randomCountry);
         etGuess.setText("");
     }

@@ -5,9 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MyItemData {
-    private static final HashMap<String, MyItem> data = new HashMap<>();
+    private final HashMap<String, MyItem> data = new HashMap<>();
 
-    static {
+    //constructor for MyItemData
+    public MyItemData() {
             // --- ASIA ---
             data.put("Afghanistan", new MyItem("Afghanistan", "Asia", "Islam", "Yes", "No", "38M"));
             data.put("Armenia", new MyItem("Armenia", "Asia", "Christianity", "No", "No", "3M"));
@@ -143,7 +144,7 @@ public class MyItemData {
         }
 
     // Returns a single country's info
-    public static MyItem getCountryInfo(String country) {
+    public MyItem getCountryInfo(String country) {
         MyItem item = data.get(country);
         if (item == null) {
             return new MyItem(country, "Unknown", "Unknown", "Unknown", "No", "Unknown");
@@ -152,12 +153,12 @@ public class MyItemData {
     }
 
     // Returns a list of all MyItem objects
-    public static List<MyItem> getItems() {
+    public List<MyItem> getItems() {
         return new ArrayList<>(data.values());
     }
 
     //Returns a random country from the list of countries
-    public static MyItem GetRandomCountry() {
+    public MyItem getRandomCountry() {
             ArrayList<MyItem> list = new ArrayList<>(getItems()); // all countries
             if (list.isEmpty()) return null;
 

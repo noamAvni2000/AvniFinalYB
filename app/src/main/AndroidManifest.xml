@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permissions for notifications and foreground media playback -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission
@@ -20,11 +19,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AvniFinalYB"
         tools:targetApi="31">
+        <activity
+            android:name=".ActivityAi"
+            android:exported="false" />
+
         <service
             android:name=".MyWinAudioService"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="mediaPlayback"></service>
+            android:foregroundServiceType="mediaPlayback" />
 
         <activity
             android:name=".ActivityStatistics"
@@ -35,11 +38,9 @@
         <activity
             android:name=".ActivityGame"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

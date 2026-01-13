@@ -52,7 +52,8 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation(libs.google.generativeai) // SDK רשמי ל‑Gemini
+    implementation("com.google.ai.client.generativeai:generativeai:0.5.0") // SDK רשמי ל‑Gemini
+    implementation("com.google.guava:guava:33.0.0-android") // Explicitly add Guava
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
