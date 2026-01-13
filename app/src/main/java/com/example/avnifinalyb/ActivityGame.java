@@ -72,10 +72,8 @@ public class ActivityGame extends AppCompatActivity {
         setupTextWatcher();
         setupAiHelpButton();
         setupEnterCountryButton();
-        chooseRandomCountry();
-        adapter.setTargetCountry(randomCountry);
+        restartGame();
 
-        Log.d("guessed country", "correct country: " + randomCountry.getCountry());
     }
 
     private void connectUiElements() {
@@ -241,11 +239,19 @@ public class ActivityGame extends AppCompatActivity {
         builder.setTitle("You won!");
         builder.setMessage("What would you like to do now?");
 
-        builder.setPositiveButton("Reset game", (dialog, which) -> restartGame());
-        builder.setNegativeButton("View statistics", (dialog, which) -> {
-            Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
-            startActivity(intent);
-            finish();
+        builder.setPositiveButton("Reset game", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ActivityGame.this.restartGame();
+            }
+        });
+        builder.setNegativeButton("View statistics", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
+                ActivityGame.this.startActivity(intent);
+                ActivityGame.this.finish();
+            }
         });
         builder.show();
     }
@@ -288,8 +294,9 @@ public class ActivityGame extends AppCompatActivity {
     private void restartGame() {
         guessedCountries.clear();
         adapter.notifyDataSetChanged();
-        randomCountry = myItemData.getRandomCountry();
+        chooseRandomCountry();
         adapter.setTargetCountry(randomCountry);
         etGuess.setText("");
+        Log.d("guessed country", "correct country: " + randomCountry.getCountry());
     }
 }

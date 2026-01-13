@@ -36,10 +36,7 @@ public class ActivityAi extends AppCompatActivity {
         setContentView(R.layout.activity_ai);
         Log.d(TAG, "onCreate()");
 
-        editPrompt = findViewById(R.id.editPrompt);
-        btnSend = findViewById(R.id.btnSend);
-        progress = findViewById(R.id.progress);
-        txtAnswer = findViewById(R.id.txtAnswer);
+        connectUiElements();
 
         String apiKey = BuildConfig.GOOGLE_API_KEY;
         if (apiKey == null || apiKey.isEmpty()) {
@@ -55,6 +52,17 @@ public class ActivityAi extends AppCompatActivity {
                 sendToGemini();
             }
         });
+    }
+
+    private void connectUiElements(){
+        editPrompt = findViewById(R.id.editPrompt);
+        btnSend = findViewById(R.id.btnSend);
+        progress = findViewById(R.id.progress);
+        txtAnswer = findViewById(R.id.txtAnswer);
+    }
+
+    private void checkIfThereIsKey(){
+
     }
 
     private void sendToGemini() {
