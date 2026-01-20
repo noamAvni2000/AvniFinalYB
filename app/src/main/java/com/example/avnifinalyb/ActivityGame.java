@@ -224,6 +224,8 @@ public class ActivityGame extends AppCompatActivity {
             confetti.setVisibility(View.GONE);
             tvWinMessage.setVisibility(View.GONE);
 
+
+
             Intent stopIntent = new Intent(this, MyWinAudioService.class);
             stopIntent.setAction(MyWinAudioService.ACTION_STOP);
             startService(stopIntent);
@@ -232,6 +234,12 @@ public class ActivityGame extends AppCompatActivity {
                 showWinDialog();
             }
         }, 5000); // 5-second delay
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(animationRunnable);///after animation remove animation
     }
 
     private void showWinDialog() {
