@@ -50,7 +50,7 @@ public class ActivityGame extends AppCompatActivity {
     private float scale = 1.0f;
 
     private MyItemData myItemData=new MyItemData();
-
+    private final Handler handlerr = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,7 +219,7 @@ public class ActivityGame extends AppCompatActivity {
         };
         handler.post(animationRunnable);
 
-        new Handler().postDelayed(() -> {
+        handlerr.postDelayed(() -> {
             handler.removeCallbacks(animationRunnable);
             confetti.setVisibility(View.GONE);
             tvWinMessage.setVisibility(View.GONE);

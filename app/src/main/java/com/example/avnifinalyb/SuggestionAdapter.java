@@ -62,7 +62,7 @@ public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.Su
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
-                        int position = getAdapterPosition();
+                        int position = getBindingAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(suggestionList.get(position));
                         }
