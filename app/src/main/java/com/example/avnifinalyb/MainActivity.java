@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Usernames user=new Usernames();
         user.setUsername("noam");
         user.setPassword("123");
-        userNamesDao.insert(user);
+        userNamesDao.insert(user);///need to reme,ber to delete this
 
         btnAdmin.setOnClickListener(new View.OnClickListener() {//$$
             @Override
