@@ -155,8 +155,8 @@ public class ActivityGame extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(ActivityGame.this, ActivityAi.class);
+                        intent.putExtra(ActivityAi.EXTRA_COUNTRY, randomCountry.getCountry());
                         startActivity(intent);
-                        finish();
                     }
                 })
                 .setNegativeButton("No", null)

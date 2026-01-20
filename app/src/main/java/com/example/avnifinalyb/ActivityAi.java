@@ -1,5 +1,6 @@
 package com.example.avnifinalyb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -20,6 +21,7 @@ import java.util.concurrent.Executors;
 
 public class ActivityAi extends AppCompatActivity {
     private static final String TAG = "GeminiDemo";
+    public static final String EXTRA_COUNTRY = "com.example.avnifinalyb.EXTRA_COUNTRY";
 
     private EditText editPrompt;
     private Button btnSend;
@@ -45,6 +47,17 @@ public class ActivityAi extends AppCompatActivity {
             Log.d(TAG, "Loaded GOOGLE_API_KEY (length=" + apiKey.length() + ")");
         }
         gm = new GenerativeModel("gemini-2.5-flash", apiKey);
+
+        // Check for incoming data to auto-generate a clue
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(EXTRA_COUNTRY)) {
+            String country = intent.getStringExtra(EXTRA_COUNTRY);
+            if (country != null && !country.isEmpty()) {
+                String promptForClue = "Give me one interesting and not too obvious clue for the country: " + country;
+                editPrompt.setText(promptForClue);
+                sendToGemini();
+            }
+        }
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
