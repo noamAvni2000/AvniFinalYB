@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class GuessesAdapter extends RecyclerView.Adapter<GuessesAdapter.MyViewHolder> {
 
     private ArrayList<MyItem> itemList;
     private MyItem targetCountry;
 
 
-    public MyAdapter(ArrayList<MyItem> itemList) {
+    public GuessesAdapter(ArrayList<MyItem> itemList) {
         this.itemList = itemList;
     }
 
@@ -80,7 +80,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private long parsePop(String pop) {
         if (pop.endsWith("B")) {
-            return (long) (Double.parseDouble(pop.replace("B", "")) * 1_000_000_000);
+            return (long) (Double.parseDouble(pop.replace("B", "")) * 1_000_000_000);///מכיוון שאני שולט בקלט אין בעיה קליטה
         }
         if (pop.endsWith("M")) {
             return (long) (Double.parseDouble(pop.replace("M", "")) * 1_000_000);
@@ -114,16 +114,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void updateList(ArrayList<MyItem> newList) {
         itemList = newList;
         notifyDataSetChanged();
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(MyItem item);
-    }
-
-    private OnItemClickListener listener;
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
     }
 
     public void setTargetCountry(MyItem targetCountry) {

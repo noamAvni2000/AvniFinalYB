@@ -33,7 +33,7 @@ public class ActivityGame extends AppCompatActivity {
     private Button btnEnterCountry, btnAiHelp;
     private TextView tvGame, tvWinMessage;
     private RecyclerView recyclerView, recyclerViewSuggestions;
-    private MyAdapter adapter;
+    private GuessesAdapter adapter;
     private SuggestionAdapter suggestionsAdapter;
     private ImageView confetti;
 
@@ -102,7 +102,7 @@ public class ActivityGame extends AppCompatActivity {
     }
 
     private void setupGuessedAdapter() {
-        adapter = new MyAdapter(guessedCountries);
+        adapter = new GuessesAdapter(guessedCountries);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
