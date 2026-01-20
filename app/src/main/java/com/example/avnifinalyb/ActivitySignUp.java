@@ -18,9 +18,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class ActivitySignUp extends AppCompatActivity {
 
-    TextView tvEnter;
-    EditText etUsername2, etPassword2, etConfirm;
-    Button btnRegister;
+    private TextView tvEnter;
+    private EditText etUsername2, etPassword2, etConfirm;
+    private Button btnRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

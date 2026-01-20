@@ -29,18 +29,18 @@ import java.util.List;
 
 public class ActivityGame extends AppCompatActivity {
 
-    EditText etGuess;
-    Button btnEnterCountry, btnAiHelp;
-    TextView tvGame, tvWinMessage;
-    RecyclerView recyclerView, recyclerViewSuggestions;
-    MyAdapter adapter;
-    SuggestionAdapter suggestionsAdapter;
-    ImageView confetti;
+    private EditText etGuess;
+    private Button btnEnterCountry, btnAiHelp;
+    private TextView tvGame, tvWinMessage;
+    private RecyclerView recyclerView, recyclerViewSuggestions;
+    private MyAdapter adapter;
+    private SuggestionAdapter suggestionsAdapter;
+    private ImageView confetti;
 
     // Data lists
-    ArrayList<MyItem> allCountries;
-    ArrayList<MyItem> guessedCountries;
-    ArrayList<MyItem> suggestions;
+    private ArrayList<MyItem> allCountries;
+    private ArrayList<MyItem> guessedCountries;
+    private ArrayList<MyItem> suggestions;
 
     private MyItem randomCountry;
 
