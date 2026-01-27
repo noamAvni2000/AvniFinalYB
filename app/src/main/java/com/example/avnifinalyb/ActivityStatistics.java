@@ -1,6 +1,8 @@
 package com.example.avnifinalyb;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class ActivityStatistics extends AppCompatActivity {
+
+    TextView tvTitle, tvWinAmount, tvAvgGuesses, tvGuessAmountNow;
+    Button btnNewGame;
+    int winAmount, guessesThisGame;
+    double avgGuesses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +27,19 @@ public class ActivityStatistics extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        connectUiElements();
+
+    }
+
+    private void connectUiElements(){
+        tvAvgGuesses=findViewById(R.id.tvAvgGuesses);
+        tvTitle=findViewById(R.id.tvTitle);
+        tvWinAmount=findViewById(R.id.tvWinAmount);
+        btnNewGame=findViewById(R.id.btnNewGame);
+    }
+
+    private void setStats(){
+
     }
 }
