@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.338"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintVertical_bias="0.14" />
+        app:layout_constraintVertical_bias="0.303" />
 
     <TextView
         android:id="@+id/tvGuessAmountNow"
@@ -54,7 +54,7 @@
         app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAvgGuesses"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.061" />
 
     <Button
         android:id="@+id/btnNewGame"
@@ -64,5 +64,52 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGuessAmountNow" />
+        app:layout_constraintTop_toBottomOf="@+id/tvGuessAmountNow"
+        app:layout_constraintVertical_bias="0.369" />
+
+    <TextView
+        android:id="@+id/tvRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your record for least guesses in a game: "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.294"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvGuessAmountNow"
+        app:layout_constraintVertical_bias="0.063" />
+
+    <TextView
+        android:id="@+id/tvWinsAi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your win amount without AI: "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.197"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWinAmount"
+        app:layout_constraintVertical_bias="0.049" />
+
+    <TextView
+        android:id="@+id/tvAiThisGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Did you use AI this game? "
+        app:layout_constraintBottom_toTopOf="@+id/tvAvgGuesses"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.186"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWinsAi"
+        app:layout_constraintVertical_bias="0.518" />
+
+    <Button
+        android:id="@+id/btnSwitchUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click to switch user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNewGame" />
 </androidx.constraintlayout.widget.ConstraintLayout>
