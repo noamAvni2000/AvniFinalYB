@@ -30,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        UsersDatabase db1 = UsersDatabase.getInstance(getApplicationContext());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                db1.clearAllTables();
+            }
+        }).start();
+
         tvEnterDetails=findViewById(R.id.tvEnterDetails);
         etPassword=findViewById(R.id.etPassword);
         btnLogin=findViewById(R.id.btnLogin);
@@ -41,15 +50,15 @@ public class MainActivity extends AppCompatActivity {
 
         UsersDatabase db= UsersDatabase.getInstance(this);
         UsernamesDao userNamesDao=db.usernamesDao();
-        Usernames user=new Usernames();
-        user.setUsername("noam");
-        user.setPassword("123");
-        userNamesDao.insert(user);///need to reme,ber to delete this
 
-        btnAdmin.setOnClickListener(new View.OnClickListener() {//$$
+        btnAdmin.setOnClickListener(new View.OnClickListener() {//$$ need to remember to delete this
             @Override
             public void onClick(View v) {
+                String username="noam";
+                String password="123";
+                Usernames user=userNamesDao.login(username,password);
                 Intent intent = new Intent(MainActivity.this, ActivityGame.class);
+                intent.putExtra("USERNAME_KEY_ADMIN", username);
                 startActivity(intent);
                 finish();
             }
@@ -67,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("USERNAME_KEY", username);//saves the username of the user
                     startActivity(intent);
                     finish();
-                }//using the function from the dao to check if the user is in the database(it retuns null if not found)
+                }//using the function from the dao to check if the user is in the database(it returns null if not found)
                 else {
                     Toast.makeText(MainActivity.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
                 }//a toast to show the user their login attempt failed

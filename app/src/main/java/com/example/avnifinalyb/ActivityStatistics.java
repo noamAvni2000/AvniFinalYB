@@ -16,6 +16,7 @@ public class ActivityStatistics extends AppCompatActivity {
     TextView tvWinAmountResult, tvWinsAiResult, tvAiThisGameResult, tvAvgGuessesResult, tvGuessAmountNowResult;
     Button btnNewGame, btnSwitchUser;
     int winAmount, guessesThisGame;
+    boolean aiUse;
     double avgGuesses;
 
     @Override
@@ -30,7 +31,7 @@ public class ActivityStatistics extends AppCompatActivity {
         });
 
         connectUiElements();
-
+        setStats();
     }
 
     private void connectUiElements(){
@@ -52,6 +53,22 @@ public class ActivityStatistics extends AppCompatActivity {
     }
 
     private void setStats(){
+        if(getIntent()!=null) {
+            guessesThisGame = getIntent().getIntExtra("guessAmount", -1);
+            aiUse = getIntent().getBooleanExtra("aiUse", false);
+        }
+
+        else {
+            guessesThisGame=-1;
+            aiUse=false;
+        }
+        tvGuessAmountNowResult.setText(String.valueOf(guessesThisGame));
+        if(aiUse){
+            tvAiThisGameResult.setText("Yes");
+        }
+        else{
+            tvAiThisGameResult.setText("No");
+        }
 
     }
 }

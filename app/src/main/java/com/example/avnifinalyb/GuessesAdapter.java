@@ -39,7 +39,7 @@ public class GuessesAdapter extends RecyclerView.Adapter<GuessesAdapter.MyViewHo
         MyItem guessed = itemList.get(position);
 
         holder.tvCountry.setText(guessed.getCountry());
-        holder.tvCountry.setTextColor(Color.parseColor("gold")); // Golden color
+        holder.tvCountry.setTextColor(Color.parseColor("#FFD700")); // Gold
 
         if (targetCountry != null) {
             String continentResult = guessed.getContinent().equalsIgnoreCase(targetCountry.getContinent())
@@ -129,7 +129,7 @@ public class GuessesAdapter extends RecyclerView.Adapter<GuessesAdapter.MyViewHo
         } else if (text.equals("Different")) {
             tv.setTextColor(Color.RED);
         } else {
-            tv.setTextColor(Color.parseColor("orange")); // כתום
+            tv.setTextColor(Color.parseColor("#FFA500")); // Orange
         }
     }
 

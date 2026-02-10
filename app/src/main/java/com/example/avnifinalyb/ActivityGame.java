@@ -53,6 +53,8 @@ public class ActivityGame extends AppCompatActivity {
     private MyItemData myItemData=new MyItemData();
     private final Handler handlerr = new Handler(Looper.getMainLooper());
 
+    private boolean aiUse=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,7 @@ public class ActivityGame extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         connectUiElements();
         loadDataLists();
@@ -155,6 +158,7 @@ public class ActivityGame extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        aiUse=true;
                         Intent intent = new Intent(ActivityGame.this, ActivityAi.class);
                         intent.putExtra(ActivityAi.EXTRA_COUNTRY, randomCountry.getCountry());
                         startActivity(intent);
@@ -258,6 +262,9 @@ public class ActivityGame extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
+                intent.putExtra("guessAmount", guessedCountries.size());
+                intent.putExtra("aiUse", aiUse);
+
                 ActivityGame.this.startActivity(intent);
                 ActivityGame.this.finish();
             }
@@ -301,6 +308,7 @@ public class ActivityGame extends AppCompatActivity {
     }
 
     private void restartGame() {
+        aiUse=false;
         guessedCountries.clear();
         adapter.notifyDataSetChanged();
         chooseRandomCountry();

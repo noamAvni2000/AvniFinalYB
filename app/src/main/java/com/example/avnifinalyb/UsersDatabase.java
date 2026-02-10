@@ -6,17 +6,24 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities= {Usernames.class}, version = 1)
+@Database(entities = {Usernames.class}, version = 2)
 public abstract class UsersDatabase extends RoomDatabase {
     private static UsersDatabase instance;
 
-    public abstract UsernamesDao  usernamesDao();
+    public abstract UsernamesDao usernamesDao();
 
-    public static synchronized UsersDatabase getInstance(Context context){
-        if(instance==null)
-        {
-            instance= Room.databaseBuilder(context.getApplicationContext(),UsersDatabase.class,"users_database").allowMainThreadQueries().build();
+    public static synchronized UsersDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(
+                            context.getApplicationContext(),
+                            UsersDatabase.class,
+                            "users_database"
+                    )
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
+                    .build();
         }
         return instance;
     }
 }
+
