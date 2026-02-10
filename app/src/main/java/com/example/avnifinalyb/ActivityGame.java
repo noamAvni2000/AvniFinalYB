@@ -55,6 +55,9 @@ public class ActivityGame extends AppCompatActivity {
 
     private boolean aiUse=false;
 
+    UsersDatabase db= UsersDatabase.getInstance(this);
+    UsernamesDao userNamesDao=db.usernamesDao();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -261,10 +264,11 @@ public class ActivityGame extends AppCompatActivity {
         builder.setNegativeButton("View statistics", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                userNamesDao.getUserByUsername("USERNAME_KEY_ADMIN").setWinAmount(userNamesDao.getUserByUsername("USERNAME_KEY_ADMIN").getWinAmount()+1);
                 Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
                 intent.putExtra("guessAmount", guessedCountries.size());
                 intent.putExtra("aiUse", aiUse);
-
+                intent.putExtra("USERNAME_KEY_ADMIN", USERNAME_KEY_ADMIN.getExtra);
                 ActivityGame.this.startActivity(intent);
                 ActivityGame.this.finish();
             }

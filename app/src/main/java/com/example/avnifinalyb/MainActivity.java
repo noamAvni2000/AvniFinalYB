@@ -30,14 +30,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        UsersDatabase db1 = UsersDatabase.getInstance(getApplicationContext());
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                db1.clearAllTables();
-            }
-        }).start();
 
         tvEnterDetails=findViewById(R.id.tvEnterDetails);
         etPassword=findViewById(R.id.etPassword);
@@ -54,13 +46,18 @@ public class MainActivity extends AppCompatActivity {
         btnAdmin.setOnClickListener(new View.OnClickListener() {//$$ need to remember to delete this
             @Override
             public void onClick(View v) {
-                String username="noam";
-                String password="123";
-                Usernames user=userNamesDao.login(username,password);
-                Intent intent = new Intent(MainActivity.this, ActivityGame.class);
-                intent.putExtra("USERNAME_KEY_ADMIN", username);
-                startActivity(intent);
-                finish();
+                    String username = "noam";
+                    String password = "123";
+                    Usernames user = userNamesDao.login(username, password);
+                    if(user!=null) {
+                        Intent intent = new Intent(MainActivity.this, ActivityGame.class);
+                        intent.putExtra("USERNAME_KEY_ADMIN", username);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
+                    }//a toast to show the user their login attempt failed
             }
         });
 
