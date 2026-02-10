@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class ActivityStatistics extends AppCompatActivity {
 
     TextView tvTitle, tvWinAmount, tvAvgGuesses, tvGuessAmountNow, tvRecord, tvWinsAi, tvAiThisGame;
+    TextView tvWinAmountResult, tvWinsAiResult, tvAiThisGameResult, tvAvgGuessesResult, tvGuessAmountNowResult;
     Button btnNewGame, btnSwitchUser;
     int winAmount, guessesThisGame;
     double avgGuesses;
@@ -42,6 +43,12 @@ public class ActivityStatistics extends AppCompatActivity {
         tvWinsAi=findViewById(R.id.tvWinsAi);
         tvAiThisGame=findViewById(R.id.tvAiThisGame);
         btnSwitchUser=findViewById(R.id.btnSwitchUser);
+        tvWinAmountResult=findViewById(R.id.tvWinAmountResult);
+        tvWinsAiResult=findViewById(R.id.tvWinsAiResult);
+        tvAiThisGameResult=findViewById(R.id.tvAiThisGameResult);
+        tvAvgGuessesResult=findViewById(R.id.tvAvgGuessesResult);
+        tvGuessAmountNowResult=findViewById(R.id.tvGuessAmountNowResult);
+
     }
 
     private void setStats(){

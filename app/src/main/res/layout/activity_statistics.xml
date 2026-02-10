@@ -13,84 +13,65 @@
         android:layout_height="wrap_content"
         android:text="Congratulations on the win! Here are your statistics"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvWinAmount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.073" />
-
+        app:layout_constraintTop_toTopOf="parent"/>
     <TextView
         android:id="@+id/tvWinAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your win amount: "
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvWinsAi"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintVertical_bias="0.07" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"/>
     <TextView
         android:id="@+id/tvAvgGuesses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your average amount of guesses every win: "
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvGuessAmountNow"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.338"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintVertical_bias="0.303" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvAiThisGame"/>
     <TextView
         android:id="@+id/tvGuessAmountNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Guesses this game: "
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvRecord"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAvgGuesses"
-        app:layout_constraintVertical_bias="0.061" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvAvgGuesses"/>
     <Button
         android:id="@+id/btnNewGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Click for a new game"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnSwitchUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGuessAmountNow"
-        app:layout_constraintVertical_bias="0.369" />
+        app:layout_constraintTop_toBottomOf="@id/tvRecord" />
 
     <TextView
         android:id="@+id/tvRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your record for least guesses in a game: "
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnNewGame"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.294"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGuessAmountNow"
-        app:layout_constraintVertical_bias="0.063" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvGuessAmountNow"/>
     <TextView
         android:id="@+id/tvWinsAi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your win amount without AI: "
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvAiThisGame"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.197"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWinAmount"
-        app:layout_constraintVertical_bias="0.049" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvWinAmount"/>
     <TextView
         android:id="@+id/tvAiThisGame"
         android:layout_width="wrap_content"
@@ -98,11 +79,8 @@
         android:text="Did you use AI this game? "
         app:layout_constraintBottom_toTopOf="@+id/tvAvgGuesses"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWinsAi"
-        app:layout_constraintVertical_bias="0.518" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvWinsAi"/>
     <Button
         android:id="@+id/btnSwitchUser"
         android:layout_width="wrap_content"
@@ -112,4 +90,70 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnNewGame" />
+
+    <TextView
+        android:id="@+id/tvWinAmountResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@id/tvWinAmountResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvWinAmount"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <TextView
+        android:id="@+id/tvWinsAiResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@id/tvAiThisGameResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvWinsAi"
+        app:layout_constraintTop_toBottomOf="@+id/tvWinAmountResult" />
+
+    <TextView
+        android:id="@+id/tvAiThisGameResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@id/tvAvgGuessesResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvAiThisGame"
+        app:layout_constraintTop_toBottomOf="@+id/tvWinsAiResult" />
+
+    <TextView
+        android:id="@+id/tvAvgGuessesResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="47dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@id/tvGuessAmountNowResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvAvgGuesses"
+        app:layout_constraintTop_toBottomOf="@+id/tvAiThisGameResult" />
+
+    <TextView
+        android:id="@+id/tvGuessAmountNowResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@id/tvRecordResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvGuessAmountNow"
+        app:layout_constraintTop_toBottomOf="@id/tvAvgGuessesResult" />
+
+    <TextView
+        android:id="@+id/tvRecordResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="Parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvRecord"
+        app:layout_constraintTop_toBottomOf="@+id/tvGuessAmountNowResult" />
 </androidx.constraintlayout.widget.ConstraintLayout>
