@@ -55,8 +55,10 @@ public class ActivityGame extends AppCompatActivity {
 
     private boolean aiUse=false;
 
-    UsersDatabase db= UsersDatabase.getInstance(this);
-    UsernamesDao userNamesDao=db.usernamesDao();
+    UsersDatabase db = UsersDatabase.getInstance(this);
+    UsernamesDao userNamesDao = db.usernamesDao();
+
+    private String username = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,6 @@ public class ActivityGame extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
         connectUiElements();
         loadDataLists();
@@ -92,6 +93,16 @@ public class ActivityGame extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         confetti = findViewById(R.id.confetti);
         tvWinMessage = findViewById(R.id.tvWinMessage);
+        // Retrieve username from intent
+        if (getIntent() != null) {
+            String userKey = getIntent().getStringExtra("USERNAME_KEY");
+            String adminKey = getIntent().getStringExtra("USERNAME_KEY_ADMIN");
+            if (userKey != null) {
+                username = userKey;
+            } else if (adminKey != null) {
+                username = adminKey;
+            }
+        }
     }
 
     private void loadDataLists() {
@@ -264,11 +275,15 @@ public class ActivityGame extends AppCompatActivity {
         builder.setNegativeButton("View statistics", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                userNamesDao.getUserByUsername("USERNAME_KEY_ADMIN").setWinAmount(userNamesDao.getUserByUsername("USERNAME_KEY_ADMIN").getWinAmount()+1);
+                Usernames user = userNamesDao.getUserByUsername(username);
+                if (user != null) {
+                    user.setWinAmount(user.getWinAmount() + 1);
+                    userNamesDao.update(user);
+                }
                 Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
                 intent.putExtra("guessAmount", guessedCountries.size());
                 intent.putExtra("aiUse", aiUse);
-                intent.putExtra("USERNAME_KEY_ADMIN", USERNAME_KEY_ADMIN.getExtra);
+                intent.putExtra("USERNAME_KEY", username); // Pass the username
                 ActivityGame.this.startActivity(intent);
                 ActivityGame.this.finish();
             }

@@ -62,6 +62,14 @@ public class ActivityStatistics extends AppCompatActivity {
             guessesThisGame=-1;
             aiUse=false;
         }
+        
+        String username = "";
+        if (getIntent() != null && getIntent().hasExtra("USERNAME_KEY")) {
+            username = getIntent().getStringExtra("USERNAME_KEY");
+        }
+        else if(getIntent() != null && getIntent().hasExtra("USERNAME_KEY_ADMIN")) {
+            username = getIntent().getStringExtra("USERNAME_KEY_ADMIN");
+        }
         tvGuessAmountNowResult.setText(String.valueOf(guessesThisGame));
         if(aiUse){
             tvAiThisGameResult.setText("Yes");
@@ -69,6 +77,8 @@ public class ActivityStatistics extends AppCompatActivity {
         else{
             tvAiThisGameResult.setText("No");
         }
+
+        tvWinAmountResult.setText(String.valueOf(winAmount));
 
     }
 }
