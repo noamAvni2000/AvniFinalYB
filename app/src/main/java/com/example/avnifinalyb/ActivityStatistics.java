@@ -94,7 +94,7 @@ public class ActivityStatistics extends AppCompatActivity {
 
         tvWinAmountResult.setText(String.valueOf(winAmount));
 
-        tvWinsAiResult.setText(String.valueOf(aiWinAmount));
+        tvWinsAiResult.setText(String.valueOf(winAmount-aiWinAmount));
 
         tvAvgGuessesResult.setText(String.valueOf(avgGuesses));
 
