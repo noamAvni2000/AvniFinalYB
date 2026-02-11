@@ -43,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
         UsersDatabase db= UsersDatabase.getInstance(this);
         UsernamesDao userNamesDao=db.usernamesDao();
 
+        // Temporary code to clear the database.
+        // REMOVE THIS CODE after running the app once.
+        /*new Thread(() -> {
+            userNamesDao.clearTable();
+            runOnUiThread(() -> Toast.makeText(MainActivity.this, "Database cleared!", Toast.LENGTH_SHORT).show());
+        }).start();*/
+
+
         btnAdmin.setOnClickListener(new View.OnClickListener() {//$$ need to remember to delete this
             @Override
             public void onClick(View v) {

@@ -19,6 +19,9 @@ public interface UsernamesDao {
     @Delete
     void delete (Usernames u);
 
+    @Query("DELETE FROM Usernames")
+    void clearTable();
+
     @Query("SELECT * FROM Usernames WHERE username = :username AND password = :password")
     Usernames login(String username, String password);
 

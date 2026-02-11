@@ -15,9 +15,13 @@ public class ActivityStatistics extends AppCompatActivity {
     TextView tvTitle, tvWinAmount, tvAvgGuesses, tvGuessAmountNow, tvRecord, tvWinsAi, tvAiThisGame;
     TextView tvWinAmountResult, tvWinsAiResult, tvAiThisGameResult, tvAvgGuessesResult, tvGuessAmountNowResult;
     Button btnNewGame, btnSwitchUser;
-    int winAmount, guessesThisGame;
+    int winAmount, guessesThisGame, aiWinAmount;
     boolean aiUse;
     double avgGuesses;
+
+    private UsernamesDao userNamesDao;
+
+    UsersDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,8 @@ public class ActivityStatistics extends AppCompatActivity {
         tvAiThisGameResult=findViewById(R.id.tvAiThisGameResult);
         tvAvgGuessesResult=findViewById(R.id.tvAvgGuessesResult);
         tvGuessAmountNowResult=findViewById(R.id.tvGuessAmountNowResult);
-
+        db= UsersDatabase.getInstance(this);
+        userNamesDao = db.usernamesDao();
     }
 
     private void setStats(){
@@ -62,13 +67,13 @@ public class ActivityStatistics extends AppCompatActivity {
             guessesThisGame=-1;
             aiUse=false;
         }
-        
-        String username = "";
+
+        String usernameStr = "";
         if (getIntent() != null && getIntent().hasExtra("USERNAME_KEY")) {
-            username = getIntent().getStringExtra("USERNAME_KEY");
+            usernameStr = getIntent().getStringExtra("USERNAME_KEY");
         }
         else if(getIntent() != null && getIntent().hasExtra("USERNAME_KEY_ADMIN")) {
-            username = getIntent().getStringExtra("USERNAME_KEY_ADMIN");
+            usernameStr = getIntent().getStringExtra("USERNAME_KEY_ADMIN");
         }
         tvGuessAmountNowResult.setText(String.valueOf(guessesThisGame));
         if(aiUse){
@@ -78,7 +83,20 @@ public class ActivityStatistics extends AppCompatActivity {
             tvAiThisGameResult.setText("No");
         }
 
+        if(usernameStr !=null && !usernameStr.isEmpty()) {
+            Usernames user = userNamesDao.getUserByUsername(usernameStr);
+            if (user != null) {
+                winAmount = user.getWinAmount();
+                aiWinAmount = user.getAiWinAmount();
+                avgGuesses = user.getAvgGuessAmount();
+            }
+        }
+
         tvWinAmountResult.setText(String.valueOf(winAmount));
+
+        tvWinsAiResult.setText(String.valueOf(aiWinAmount));
+
+        tvAvgGuessesResult.setText(String.valueOf(avgGuesses));
 
     }
 }
