@@ -280,6 +280,7 @@ public class ActivityGame extends AppCompatActivity {
                     user.setWinAmount(user.getWinAmount() + 1);
                     user.setGamesPlayed(user.getGamesPlayed() + 1);
                     user.setGuessAmount(user.getGuessAmount() + guessedCountries.size());
+                    user.setAvgGuessAmount((double)user.getGuessAmount() / user.getGamesPlayed());
                     userNamesDao.update(user);
                 }
                 if(aiUse){
