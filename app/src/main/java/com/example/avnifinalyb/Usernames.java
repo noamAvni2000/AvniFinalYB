@@ -22,6 +22,8 @@ public class  Usernames{
 
     private double avgGuessAmount;
 
+    private int record;
+
     public Usernames(String username, String password) {
         this.username = username;
         this.password = password;
@@ -30,15 +32,17 @@ public class  Usernames{
         this.aiWinAmount=0;
         this.gamesPlayed=0;
         this.guessAmount=0;
+        this.record=0;
     }
 
-    public Usernames(String username, String password, int winAmount, int aiWinAmount, int gamesPlayed, int guessAmount) {
+    public Usernames(String username, String password, int winAmount, int aiWinAmount, int gamesPlayed, int guessAmount, int record) {
         this.username = username;
         this.password = password;
         this.winAmount=winAmount;
         this.aiWinAmount=aiWinAmount;
         this.gamesPlayed=gamesPlayed;
         this.guessAmount=guessAmount;
+        this.record = record;
         if(this.gamesPlayed!=0)
             this.avgGuessAmount=this.guessAmount/this.gamesPlayed;
         else
@@ -109,5 +113,13 @@ public class  Usernames{
 
     public void setGuessAmount(int guessAmount){
         this.guessAmount=guessAmount;
+    }
+
+    public int getRecord() {
+        return record;
+    }
+
+    public void setRecord(int record) {
+        this.record = record;
     }
 }

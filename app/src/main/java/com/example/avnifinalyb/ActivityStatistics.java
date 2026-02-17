@@ -13,9 +13,9 @@ import androidx.core.view.WindowInsetsCompat;
 public class ActivityStatistics extends AppCompatActivity {
 
     TextView tvTitle, tvWinAmount, tvAvgGuesses, tvGuessAmountNow, tvRecord, tvWinsAi, tvAiThisGame;
-    TextView tvWinAmountResult, tvWinsAiResult, tvAiThisGameResult, tvAvgGuessesResult, tvGuessAmountNowResult;
+    TextView tvWinAmountResult, tvWinsAiResult, tvAiThisGameResult, tvAvgGuessesResult, tvGuessAmountNowResult, tvRecordResult;
     Button btnNewGame, btnSwitchUser;
-    int winAmount, guessesThisGame, aiWinAmount;
+    int winAmount, guessesThisGame, aiWinAmount, record;
     boolean aiUse;
     double avgGuesses;
 
@@ -53,6 +53,7 @@ public class ActivityStatistics extends AppCompatActivity {
         tvAiThisGameResult=findViewById(R.id.tvAiThisGameResult);
         tvAvgGuessesResult=findViewById(R.id.tvAvgGuessesResult);
         tvGuessAmountNowResult=findViewById(R.id.tvGuessAmountNowResult);
+        tvRecordResult=findViewById(R.id.tvRecordResult);
         db= UsersDatabase.getInstance(this);
         userNamesDao = db.usernamesDao();
     }
@@ -89,6 +90,7 @@ public class ActivityStatistics extends AppCompatActivity {
                 winAmount = user.getWinAmount();
                 aiWinAmount = user.getAiWinAmount();
                 avgGuesses = user.getAvgGuessAmount();
+                record = user.getRecord();
             }
         }
 
@@ -97,6 +99,8 @@ public class ActivityStatistics extends AppCompatActivity {
         tvWinsAiResult.setText(String.valueOf(winAmount-aiWinAmount));
 
         tvAvgGuessesResult.setText(String.valueOf(avgGuesses));
+
+        tvRecordResult.setText(String.valueOf(record));
 
     }
 }

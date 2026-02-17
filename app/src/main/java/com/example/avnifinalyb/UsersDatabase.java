@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Usernames.class}, version = 5)
+@Database(entities = {Usernames.class}, version = 6)
 public abstract class UsersDatabase extends RoomDatabase {
     private static UsersDatabase instance;
 
