@@ -120,7 +120,7 @@ public class ActivityStatistics extends AppCompatActivity {
 
         tvWinsAiResult.setText(String.valueOf(winAmount-aiWinAmount));
 
-        tvAvgGuessesResult.setText(String.valueOf(avgGuesses));
+        tvAvgGuessesResult.setText(String.format("%.2f", avgGuesses));///makes the number to a string with 2 decimal places
 
         tvRecordResult.setText(String.valueOf(record));
 
