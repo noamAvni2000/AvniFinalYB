@@ -261,6 +261,23 @@ public class ActivityGame extends AppCompatActivity {
         handler.removeCallbacks(animationRunnable);///after animation remove animation
     }
 
+    private void updateUserStatistics() {
+        Usernames user = userNamesDao.getUserByUsername(username);
+        if (user != null) {
+            user.setWinAmount(user.getWinAmount() + 1);
+            user.setGamesPlayed(user.getGamesPlayed() + 1);
+            user.setGuessAmount(user.getGuessAmount() + guessedCountries.size());
+            user.setAvgGuessAmount((double) user.getGuessAmount() / user.getGamesPlayed());
+            if (user.getRecord() == 0 || guessedCountries.size() < user.getRecord()) {
+                user.setRecord(guessedCountries.size());
+            }
+            if (aiUse) {
+                user.setAiWinAmount(user.getAiWinAmount() + 1);
+            }
+            userNamesDao.update(user);
+        }
+    }
+
     private void showWinDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ActivityGame.this);
         builder.setTitle("You won!");
@@ -269,29 +286,14 @@ public class ActivityGame extends AppCompatActivity {
         builder.setPositiveButton("Reset game", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                updateUserStatistics();
                 ActivityGame.this.restartGame();
             }
         });
         builder.setNegativeButton("View statistics", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Usernames user = userNamesDao.getUserByUsername(username);
-                if (user != null) {
-                    user.setWinAmount(user.getWinAmount() + 1);
-                    user.setGamesPlayed(user.getGamesPlayed() + 1);
-                    user.setGuessAmount(user.getGuessAmount() + guessedCountries.size());
-                    user.setAvgGuessAmount((double)user.getGuessAmount() / user.getGamesPlayed());
-                    if(user.getRecord() == 0 || guessedCountries.size() < user.getRecord()){
-                        user.setRecord(guessedCountries.size());
-                    }
-                    userNamesDao.update(user);
-                }
-                if(aiUse){
-                    if(user!=null) {
-                        user.setAiWinAmount(user.getAiWinAmount() + 1);
-                        userNamesDao.update(user);
-                    }
-                }
+                updateUserStatistics();
 
                 Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
                 intent.putExtra("guessAmount", guessedCountries.size());
