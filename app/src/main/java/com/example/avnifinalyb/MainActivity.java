@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tvEnterDetails;
     private EditText etPassword, etUsername;
-    private Button btnLogin, btnSignUp, btnAdmin;
+    private Button btnLogin, btnSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         btnLogin=findViewById(R.id.btnLogin);
         btnSignUp=findViewById(R.id.btnSignUp);
         etUsername=findViewById(R.id.etUsername);
-        btnAdmin=findViewById(R.id.btnAdmin);
 
         etPassword.setTransformationMethod(new PasswordTransformationMethod());//hides the password during login
 
@@ -50,24 +49,6 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(() -> Toast.makeText(MainActivity.this, "Database cleared!", Toast.LENGTH_SHORT).show());
         }).start();*/
 
-
-        btnAdmin.setOnClickListener(new View.OnClickListener() {//$$ need to remember to delete this
-            @Override
-            public void onClick(View v) {
-                    String username = "noam";
-                    String password = "123";
-                    Usernames user = userNamesDao.login(username, password);
-                    if(user!=null) {
-                        Intent intent = new Intent(MainActivity.this, ActivityGame.class);
-                        intent.putExtra("USERNAME_KEY_ADMIN", username);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else {
-                        Toast.makeText(MainActivity.this, "Username or Password is incorrect", Toast.LENGTH_SHORT).show();
-                    }//a toast to show the user their login attempt failed
-            }
-        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
