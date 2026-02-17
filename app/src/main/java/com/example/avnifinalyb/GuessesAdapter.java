@@ -43,23 +43,23 @@ public class GuessesAdapter extends RecyclerView.Adapter<GuessesAdapter.MyViewHo
 
         if (targetCountry != null) {
             String continentResult = guessed.getContinent().equalsIgnoreCase(targetCountry.getContinent())
-                    ? "Same"
-                    : "Different";
+                    ? "✅"
+                    : "❌";
             setResultText(holder.tvContinent, continentResult);
 
             String religionResult = guessed.getReligion().equalsIgnoreCase(targetCountry.getReligion())
-                    ? "Same"
-                    : "Different";
+                    ? "✅"
+                    : "❌";
             setResultText(holder.tvReligion, religionResult);
 
             String landLockedResult = guessed.getLandLocked().equalsIgnoreCase(targetCountry.getLandLocked())
-                    ? "Same"
-                    : "Different";
+                    ? "✅"
+                    : "❌";
             setResultText(holder.tvLandLocked, landLockedResult);
 
             String hasNoamResult = guessed.getHasNoam().equalsIgnoreCase(targetCountry.getHasNoam())
-                    ? "Same"
-                    : "Different";
+                    ? "✅"
+                    : "❌";
             setResultText(holder.tvHasNoam, hasNoamResult);
 
             String popResult = comparePopulationText(guessed, targetCountry);
@@ -73,9 +73,9 @@ public class GuessesAdapter extends RecyclerView.Adapter<GuessesAdapter.MyViewHo
         long g = parsePop(guess.getPopulation());
         long t = parsePop(target.getPopulation());
 
-        if (g > t) return "↑";
-        if (g < t) return "↓";
-        return "✓";
+        if (g > t) return "⬆️";
+        if (g < t) return "⬇️";
+        return "✅";
     }
 
     private long parsePop(String pop) {
@@ -120,17 +120,10 @@ public class GuessesAdapter extends RecyclerView.Adapter<GuessesAdapter.MyViewHo
         this.targetCountry = targetCountry;
     }
 
-    /// checks what the text returned is, and sets a color based on the result
+    /// sets the emoji result text — no color needed since emojis have their own colors
     private void setResultText(TextView tv, String text) {
         tv.setText(text);
-
-        if (text.equals("Same")) {
-            tv.setTextColor(Color.GREEN);
-        } else if (text.equals("Different")) {
-            tv.setTextColor(Color.RED);
-        } else {
-            tv.setTextColor(Color.parseColor("#FFA500")); // Orange
-        }
+        tv.setTextSize(18);
     }
 
 

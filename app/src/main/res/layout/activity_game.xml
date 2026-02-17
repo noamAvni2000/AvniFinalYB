@@ -5,174 +5,224 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5FA"
     tools:context=".ActivityGame">
+
+    <!-- ===== HEADER ===== -->
 
     <TextView
         android:id="@+id/tvGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Guess a country"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:layout_marginTop="20dp"
+        android:text="🌍  Guess a Country"
+        android:textColor="#1F2937"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btnAiHelp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08" />
-
-    <AutoCompleteTextView
-        android:id="@+id/etGuess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="Enter country here"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGame"
-        app:layout_constraintVertical_bias="0.061" />
-
-    <Button
-        android:id="@+id/btnEnterCountry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Click to enter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.862"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.172" />
+        android:layout_marginStart="24dp" />
 
     <Button
         android:id="@+id/btnAiHelp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ai help"
-        app:layout_constraintBottom_toTopOf="@+id/btnEnterCountry"
+        android:layout_height="40dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="#EEF2FF"
+        android:text="🤖 Hint"
+        android:textAllCaps="false"
+        android:textColor="#4A6CF7"
+        android:textSize="13sp"
+        android:minWidth="0dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvGame"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.409"
         app:layout_constraintStart_toEndOf="@+id/tvGame"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.114" />
+        app:layout_constraintTop_toTopOf="@+id/tvGame" />
 
-    <TextView
-        android:id="@+id/tvCountry2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Country"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etGuess"
-        app:layout_constraintVertical_bias="0.025" />
+    <!-- ===== INPUT ROW ===== -->
 
-    <TextView
-        android:id="@+id/tvContinent2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Continent"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etGuess"
-        app:layout_constraintVertical_bias="0.023" />
-
-    <TextView
-        android:id="@+id/tvReligion2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Religion"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.346"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etGuess"
-        app:layout_constraintVertical_bias="0.023" />
-
-    <TextView
-        android:id="@+id/tvLandLocked2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LandLocked"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etGuess"
-        app:layout_constraintVertical_bias="0.023" />
-
-    <TextView
-        android:id="@+id/tvHasNoam2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Has Noam been there?"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.809"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEnterCountry"
-        app:layout_constraintVertical_bias="0.023" />
-
-    <TextView
-        android:id="@+id/tvPopulation2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Population"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.967"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEnterCountry"
-        app:layout_constraintVertical_bias="0.021" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <AutoCompleteTextView
+        android:id="@+id/etGuess"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvPopulation2"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/white"
+        android:elevation="1dp"
+        android:hint="Enter country here..."
+        android:inputType="text"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="#1F2937"
+        android:textColorHint="#9CA3AF"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnEnterCountry"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvGame" />
+
+    <Button
+        android:id="@+id/btnEnterCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="#4A6CF7"
+        android:text="Enter ➜"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:minWidth="0dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etGuess"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etGuess"
+        app:layout_constraintTop_toTopOf="@+id/etGuess" />
+
+    <!-- ===== SUGGESTIONS OVERLAY ===== -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSuggestions"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/etGuess"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginTop="2dp"
+        android:background="@android:color/white"
+        android:elevation="4dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/etGuess"
+        app:layout_constraintStart_toStartOf="@+id/etGuess"
+        app:layout_constraintTop_toBottomOf="@+id/etGuess" />
 
+    <!-- ===== COLUMN HEADERS ===== -->
+
+    <LinearLayout
+        android:id="@+id/headerRow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="#E5E7EB"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etGuess">
+
+        <TextView
+            android:id="@+id/tvCountry2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:text="🏳️ Country"
+            android:textColor="#374151"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvContinent2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="🗺️ Continent"
+            android:textColor="#374151"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvReligion2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="🕊️ Religion"
+            android:textColor="#374151"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvLandLocked2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="🏔️ Land"
+            android:textColor="#374151"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvHasNoam2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="✈️ Noam"
+            android:textColor="#374151"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPopulation2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="👥 Pop."
+            android:textColor="#374151"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- ===== GUESSES RECYCLER VIEW ===== -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/white"
+        android:elevation="1dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerRow" />
+
+    <!-- ===== WIN OVERLAY ===== -->
 
     <ImageView
         android:id="@+id/confetti"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:elevation="10dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35" />
 
     <TextView
         android:id="@+id/tvWinMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="You Win!"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="48sp"
+        android:elevation="10dp"
+        android:text="🎉 You Win! 🎉"
+        android:textColor="#4A6CF7"
+        android:textSize="42sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
