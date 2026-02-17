@@ -1,5 +1,6 @@
 package com.example.avnifinalyb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ public class ActivityStatistics extends AppCompatActivity {
     int winAmount, guessesThisGame, aiWinAmount, record;
     boolean aiUse;
     double avgGuesses;
+    String usernameStr;
 
     private UsernamesDao userNamesDao;
 
@@ -36,6 +38,7 @@ public class ActivityStatistics extends AppCompatActivity {
 
         connectUiElements();
         setStats();
+        setupButtons();
     }
 
     private void connectUiElements(){
@@ -58,6 +61,25 @@ public class ActivityStatistics extends AppCompatActivity {
         userNamesDao = db.usernamesDao();
     }
 
+    private void setupButtons() {
+        btnNewGame.setOnClickListener(v -> {
+            Intent intent = new Intent(ActivityStatistics.this, ActivityGame.class);
+            if (getIntent() != null && getIntent().hasExtra("USERNAME_KEY_ADMIN")) {
+                intent.putExtra("USERNAME_KEY_ADMIN", usernameStr);
+            } else {
+                intent.putExtra("USERNAME_KEY", usernameStr);
+            }
+            startActivity(intent);
+            finish();
+        });
+
+        btnSwitchUser.setOnClickListener(v -> {
+            Intent intent = new Intent(ActivityStatistics.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+    }
+
     private void setStats(){
         if(getIntent()!=null) {
             guessesThisGame = getIntent().getIntExtra("guessAmount", -1);
@@ -69,7 +91,7 @@ public class ActivityStatistics extends AppCompatActivity {
             aiUse=false;
         }
 
-        String usernameStr = "";
+        usernameStr = "";
         if (getIntent() != null && getIntent().hasExtra("USERNAME_KEY")) {
             usernameStr = getIntent().getStringExtra("USERNAME_KEY");
         }
