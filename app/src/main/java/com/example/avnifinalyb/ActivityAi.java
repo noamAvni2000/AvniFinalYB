@@ -72,6 +72,7 @@ public class ActivityAi extends AppCompatActivity {
         btnSend = findViewById(R.id.btnSend);
         progress = findViewById(R.id.progress);
         txtAnswer = findViewById(R.id.txtAnswer);
+        editPrompt.setVisibility(View.GONE);
     }
 
     private void checkIfThereIsKey(){
