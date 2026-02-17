@@ -24,7 +24,6 @@ public class ActivityAi extends AppCompatActivity {
     public static final String EXTRA_COUNTRY = "com.example.avnifinalyb.EXTRA_COUNTRY";
 
     private EditText editPrompt;
-    private Button btnSend;
     private ProgressBar progress;
     private TextView txtAnswer;
 
@@ -59,17 +58,10 @@ public class ActivityAi extends AppCompatActivity {
             }
         }
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                Log.d(TAG, "Send button clicked");
-                sendToGemini();
-            }
-        });
     }
 
     private void connectUiElements(){
         editPrompt = findViewById(R.id.editPrompt);
-        btnSend = findViewById(R.id.btnSend);
         progress = findViewById(R.id.progress);
         txtAnswer = findViewById(R.id.txtAnswer);
         editPrompt.setVisibility(View.GONE);
@@ -90,7 +82,6 @@ public class ActivityAi extends AppCompatActivity {
         Log.d(TAG, "sendToGemini() prompt=('" + shortPrompt + "') len=" + prompt.length());
 
         progress.setVisibility(View.VISIBLE);
-        btnSend.setEnabled(false);
         txtAnswer.setText("");
 
         Content content = new Content.Builder().addText(prompt).build();
@@ -108,7 +99,6 @@ public class ActivityAi extends AppCompatActivity {
                     public void run() {
                         Log.v(TAG, "Updating UI with response (length=" + uiText.length() + ")");
                         progress.setVisibility(View.GONE);
-                        btnSend.setEnabled(true);
                         txtAnswer.setText(uiText);
                     }
                 });
@@ -121,7 +111,6 @@ public class ActivityAi extends AppCompatActivity {
                     @Override
                     public void run() {
                         progress.setVisibility(View.GONE);
-                        btnSend.setEnabled(true);
                         txtAnswer.setText("שגיאה: " + t.getMessage());
                     }
                 });
