@@ -5,153 +5,313 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5FA"
     tools:context=".ActivityStatistics">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Congratulations on the win! Here are your statistics"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvWinAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvWinAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your win amount: "
-        app:layout_constraintBottom_toTopOf="@+id/tvWinsAi"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
-
-    <TextView
-        android:id="@+id/tvAvgGuesses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your average amount of guesses every win: "
-        app:layout_constraintBottom_toTopOf="@+id/tvGuessAmountNow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAiThisGame" />
-    <TextView
-        android:id="@+id/tvGuessAmountNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guesses this game: "
-        app:layout_constraintBottom_toTopOf="@id/tvRecord"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAvgGuesses"/>
-    <Button
-        android:id="@+id/btnNewGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Click for a new game"
-        app:layout_constraintBottom_toTopOf="@id/btnSwitchUser"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRecord" />
-
-    <TextView
-        android:id="@+id/tvRecord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your record for least guesses in a game: "
-        app:layout_constraintBottom_toTopOf="@id/btnNewGame"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGuessAmountNow" />
-
-    <TextView
-        android:id="@+id/tvWinsAi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your win amount without AI: "
-        app:layout_constraintBottom_toTopOf="@+id/tvAiThisGame"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWinAmount" />
-
-    <TextView
-        android:id="@+id/tvAiThisGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Did you use AI this game? "
-        app:layout_constraintBottom_toTopOf="@+id/tvAvgGuesses"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWinsAi" />
-    <Button
-        android:id="@+id/btnSwitchUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Click to switch user"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNewGame" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvWinAmountResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/tvWinsAiResult"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvWinAmount"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            <!-- ===== HEADER ===== -->
 
-    <TextView
-        android:id="@+id/tvWinsAiResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@id/tvAiThisGameResult"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvWinsAi"
-        app:layout_constraintTop_toBottomOf="@+id/tvWinAmountResult" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="🏆"
+                android:textSize="48sp" />
 
-    <TextView
-        android:id="@+id/tvAiThisGameResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@id/tvAvgGuessesResult"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvAiThisGame"
-        app:layout_constraintTop_toBottomOf="@+id/tvWinsAiResult" />
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Congratulations on the win! Here are your statistics"
+                android:textColor="#1F2937"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:lineSpacingExtra="4dp" />
 
-    <TextView
-        android:id="@+id/tvAvgGuessesResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@id/tvGuessAmountNowResult"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvAvgGuesses"
-        app:layout_constraintTop_toBottomOf="@+id/tvAiThisGameResult" />
+            <!-- ===== STATS SECTION ===== -->
 
-    <TextView
-        android:id="@+id/tvGuessAmountNowResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@id/tvRecordResult"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvGuessAmountNow"
-        app:layout_constraintTop_toBottomOf="@id/tvAvgGuessesResult" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:background="@android:color/white"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
 
-    <TextView
-        android:id="@+id/tvRecordResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvRecord"
-        app:layout_constraintTop_toBottomOf="@+id/tvGuessAmountNowResult" />
+                <!-- Row 1: Total Wins -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="🥇"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/tvWinAmount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Total Wins"
+                        android:textColor="#6B7280"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvWinAmountResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#1F2937"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:text="12" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E5E7EB" />
+
+                <!-- Row 2: Wins without AI -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="🧠"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/tvWinsAi"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Wins without AI"
+                        android:textColor="#6B7280"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvWinsAiResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#1F2937"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:text="8" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E5E7EB" />
+
+                <!-- Row 3: AI this game -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="🤖"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/tvAiThisGame"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Used AI this game"
+                        android:textColor="#6B7280"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvAiThisGameResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#1F2937"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:text="No" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E5E7EB" />
+
+                <!-- Row 4: Avg guesses -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="📊"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/tvAvgGuesses"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Avg. guesses per win"
+                        android:textColor="#6B7280"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvAvgGuessesResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#1F2937"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:text="5.40" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E5E7EB" />
+
+                <!-- Row 5: Guesses this game -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="🎯"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/tvGuessAmountNow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Guesses this game"
+                        android:textColor="#6B7280"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvGuessAmountNowResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#1F2937"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:text="4" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E5E7EB" />
+
+                <!-- Row 6: Record -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="👑"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/tvRecord"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Best record (least guesses)"
+                        android:textColor="#6B7280"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvRecordResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#1F2937"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:text="2" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ===== BUTTONS ===== -->
+
+            <Button
+                android:id="@+id/btnNewGame"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="#4A6CF7"
+                android:text="🎮  New Game"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnSwitchUser"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:text="🔄  Switch User"
+                android:textAllCaps="false"
+                android:textColor="#4A6CF7"
+                android:textSize="16sp"
+                app:strokeColor="#4A6CF7" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
