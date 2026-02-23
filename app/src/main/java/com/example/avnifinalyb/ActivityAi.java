@@ -26,6 +26,7 @@ public class ActivityAi extends AppCompatActivity {
     private EditText editPrompt;
     private ProgressBar progress;
     private TextView txtAnswer;
+    private TextView tvSubTitle;
 
     private GenerativeModel gm;
     private final Executor executor = Executors.newSingleThreadExecutor();
@@ -57,14 +58,13 @@ public class ActivityAi extends AppCompatActivity {
                 sendToGemini();
             }
         }
-
     }
 
     private void connectUiElements(){
         editPrompt = findViewById(R.id.editPrompt);
         progress = findViewById(R.id.progress);
         txtAnswer = findViewById(R.id.txtAnswer);
-        editPrompt.setVisibility(View.GONE);
+        tvSubTitle = findViewById(R.id.tvSubTitle);
     }
 
     private void checkIfThereIsKey(){
@@ -74,8 +74,6 @@ public class ActivityAi extends AppCompatActivity {
     private void sendToGemini() {
         final String prompt = editPrompt.getText().toString().trim();
         if (prompt.isEmpty()) {
-            editPrompt.setError("הקלידו שאלה");
-            Log.w(TAG, "Empty prompt – showing EditText error");
             return;
         }
         final String shortPrompt = prompt.length() > 80 ? prompt.substring(0, 80) + "…" : prompt;
@@ -83,6 +81,7 @@ public class ActivityAi extends AppCompatActivity {
 
         progress.setVisibility(View.VISIBLE);
         txtAnswer.setText("");
+        tvSubTitle.setText("Generating your clue...");
 
         Content content = new Content.Builder().addText(prompt).build();
         GenerativeModelFutures model = GenerativeModelFutures.from(gm);
@@ -100,6 +99,7 @@ public class ActivityAi extends AppCompatActivity {
                         Log.v(TAG, "Updating UI with response (length=" + uiText.length() + ")");
                         progress.setVisibility(View.GONE);
                         txtAnswer.setText(uiText);
+                        tvSubTitle.setText("Here is your clue:");
                     }
                 });
             }
@@ -112,6 +112,7 @@ public class ActivityAi extends AppCompatActivity {
                     public void run() {
                         progress.setVisibility(View.GONE);
                         txtAnswer.setText("שגיאה: " + t.getMessage());
+                        tvSubTitle.setText("Failed to generate clue.");
                     }
                 });
             }
