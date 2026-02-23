@@ -53,7 +53,8 @@ public class ActivityAi extends AppCompatActivity {
         if (intent != null && intent.hasExtra(EXTRA_COUNTRY)) {
             String country = intent.getStringExtra(EXTRA_COUNTRY);
             if (country != null && !country.isEmpty()) {
-                String promptForClue = "Give me one interesting and not too obvious clue for the country: " + country;
+                String promptForClue = "Give me one interesting and not too obvious clue for the country: " + country + 
+                    ". Provide ONLY the clue itself, with no introductory text, greetings, or conversational filler.";
                 editPrompt.setText(promptForClue);
                 sendToGemini();
             }
