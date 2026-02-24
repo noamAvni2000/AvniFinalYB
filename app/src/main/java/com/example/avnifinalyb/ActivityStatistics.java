@@ -1,25 +1,41 @@
 package com.example.avnifinalyb;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 public class ActivityStatistics extends AppCompatActivity {
 
-    TextView tvTitle, tvWinAmount, tvAvgGuesses, tvGuessAmountNow, tvRecord, tvWinsAi, tvAiThisGame;
+    TextView tvTitle, tvWinAmount, tvAvgGuesses, tvGuessAmountNow, tvRecord, tvWinsAi, tvAiThisGame, tvDistance;
     TextView tvWinAmountResult, tvWinsAiResult, tvAiThisGameResult, tvAvgGuessesResult, tvGuessAmountNowResult, tvRecordResult;
     Button btnNewGame, btnSwitchUser;
     int winAmount, guessesThisGame, aiWinAmount, record;
     boolean aiUse;
     double avgGuesses;
     String usernameStr;
+    String targetCountryName;
+
+    private FusedLocationProviderClient fusedLocationClient;//הוא ה--API הראשי באנדרואיד לקבלת מיקום משתמש בצורה חכמה, חסכונית
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private MyItem targetCountryItem;
+    private MyItemData myItemData = new MyItemData();
 
     private UsernamesDao userNamesDao;
 
@@ -39,6 +55,20 @@ public class ActivityStatistics extends AppCompatActivity {
         connectUiElements();
         setStats();
         setupButtons();
+        setupLocation();
+    }
+
+    private void setupLocation() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);//הוא ה--API הראשי באנדרואיד לקבלת מיקום משתמש בצורה חכמה, חסכונית
+        
+        if (targetCountryItem != null) {
+            // Check for location permission to calculate distance
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+            } else {
+                fetchLocationAndCalculateDistance();
+            }
+        }
     }
 
     private void connectUiElements(){
@@ -57,6 +87,7 @@ public class ActivityStatistics extends AppCompatActivity {
         tvAvgGuessesResult=findViewById(R.id.tvAvgGuessesResult);
         tvGuessAmountNowResult=findViewById(R.id.tvGuessAmountNowResult);
         tvRecordResult=findViewById(R.id.tvRecordResult);
+        tvDistance = findViewById(R.id.tvDistance);
         db= UsersDatabase.getInstance(this);
         userNamesDao = db.usernamesDao();
     }
@@ -84,6 +115,10 @@ public class ActivityStatistics extends AppCompatActivity {
         if(getIntent()!=null) {
             guessesThisGame = getIntent().getIntExtra("guessAmount", -1);
             aiUse = getIntent().getBooleanExtra("aiUse", false);
+            targetCountryName = getIntent().getStringExtra("targetCountry");
+            if (targetCountryName != null) {
+                targetCountryItem = myItemData.getCountryInfo(targetCountryName);
+            }
         }
 
         else {
@@ -124,5 +159,52 @@ public class ActivityStatistics extends AppCompatActivity {
 
         tvRecordResult.setText(String.valueOf(record));
 
+    }
+
+    private void fetchLocationAndCalculateDistance() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }// if no permission for location stop the function
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null && targetCountryItem != null) {
+                    LatLng countryPos = new LatLng(targetCountryItem.getLatitude(), targetCountryItem.getLongitude());
+
+                    // Calculate distance
+                    float[] results = new float[1];
+                    Location.distanceBetween(location.getLatitude(), location.getLongitude(),
+                            countryPos.latitude, countryPos.longitude, results);
+                    float distanceInKm = results[0] / 1000;
+
+                    tvDistance.setText(String.format("You are at a distance of: %.0f km from the country", distanceInKm));
+                } else if (targetCountryItem != null) {
+                    tvDistance.setText("Could not determine your location");
+                }
+            }
+        });
+    }
+
+    private static class LatLng {
+        double latitude;
+        double longitude;
+        LatLng(double lat, double lng) {
+             this.latitude = lat;
+             this.longitude = lng;
+        }
+    }
+
+    //checks if the user gave permission to use location
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                fetchLocationAndCalculateDistance();
+            } else {
+                tvDistance.setText("Location permission denied");
+            }
+        }
     }
 }

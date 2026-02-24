@@ -24,8 +24,7 @@ android {
 
         // חשיפת המפתח לקוד Java כ‑BuildConfig.GOOGLE_API_KEY
         buildConfigField("String", "GOOGLE_API_KEY", "\"$apiKey\"")
-        // חלופה (ללא BuildConfig):
-        // resValue("string", "google_api_key", apiKey)
+        manifestPlaceholders["GOOGLE_API_KEY"] = apiKey
     }
 
     buildTypes {
@@ -58,6 +57,8 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.room.runtime)
+    implementation(libs.google.maps)
+    implementation(libs.google.location)
     annotationProcessor(libs.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

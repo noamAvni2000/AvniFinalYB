@@ -287,6 +287,19 @@
 
             </LinearLayout>
 
+            <!-- ===== DISTANCE SECTION ===== -->
+
+            <TextView
+                android:id="@+id/tvDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:textColor="#4A6CF7"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Calculating distance from you..." />
+
             <!-- ===== BUTTONS ===== -->
 
             <Button

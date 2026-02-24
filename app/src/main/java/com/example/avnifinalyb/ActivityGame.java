@@ -299,6 +299,7 @@ public class ActivityGame extends AppCompatActivity {
                 intent.putExtra("guessAmount", guessedCountries.size());
                 intent.putExtra("aiUse", aiUse);
                 intent.putExtra("USERNAME_KEY", username); // Pass the username
+                intent.putExtra("targetCountry", randomCountry.getCountry());
                 ActivityGame.this.startActivity(intent);
                 ActivityGame.this.finish();
             }
