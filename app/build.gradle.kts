@@ -1,7 +1,11 @@
 import java.util.Properties
+
 // קריאת המפתח מ‑local.properties
 val localProps = Properties().apply {
-    load(rootProject.file("local.properties").inputStream())
+    val propFile = rootProject.file("local.properties")
+    if (propFile.exists()) {
+        load(propFile.inputStream())
+    }
 }
 val apiKey = localProps.getProperty("GOOGLE_API_KEY") ?: ""
 
@@ -22,9 +26,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // חשיפת המפתח לקוד Java כ‑BuildConfig.GOOGLE_API_KEY
+        // חשיפת המפתח לקוד Java כ‑BuildConfig.GOOGLE_API_KEY (לשימוש ב-Gemini)
         buildConfigField("String", "GOOGLE_API_KEY", "\"$apiKey\"")
-        manifestPlaceholders["GOOGLE_API_KEY"] = apiKey
     }
 
     buildTypes {
@@ -41,7 +44,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    // ⚠️ נדרש אם משתמשים ב‑buildConfigField
     buildFeatures {
         buildConfig = true
     }
@@ -57,8 +59,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.room.runtime)
-    implementation(libs.google.maps)
-    implementation(libs.google.location)
+
     annotationProcessor(libs.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
