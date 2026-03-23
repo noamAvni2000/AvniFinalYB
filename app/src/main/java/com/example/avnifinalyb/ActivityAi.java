@@ -39,14 +39,8 @@ public class ActivityAi extends AppCompatActivity {
         Log.d(TAG, "onCreate()");
 
         connectUiElements();
+        checkIfThereIsKey();
 
-        String apiKey = BuildConfig.GOOGLE_API_KEY;
-        if (apiKey == null || apiKey.isEmpty()) {
-            Log.w(TAG, "GOOGLE_API_KEY is empty – did you set it in local.properties?");
-        } else {
-            Log.d(TAG, "Loaded GOOGLE_API_KEY (length=" + apiKey.length() + ")");
-        }
-        gm = new GenerativeModel("gemini-2.5-flash", apiKey);
 
         // Check for incoming data to auto-generate a clue
         Intent intent = getIntent();
@@ -69,7 +63,13 @@ public class ActivityAi extends AppCompatActivity {
     }
 
     private void checkIfThereIsKey(){
-
+        String apiKey = BuildConfig.GOOGLE_API_KEY;
+        if (apiKey == null || apiKey.isEmpty()) {
+            Log.w(TAG, "GOOGLE_API_KEY is empty – did you set it in local.properties?");
+        } else {
+            Log.d(TAG, "Loaded GOOGLE_API_KEY (length=" + apiKey.length() + ")");
+        }
+        gm = new GenerativeModel("gemini-2.5-flash", apiKey);
     }
 
     private void sendToGemini() {
