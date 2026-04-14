@@ -12,12 +12,7 @@ import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
 import com.google.ai.client.generativeai.type.Content;
 import com.google.ai.client.generativeai.type.GenerateContentResponse;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class ActivityAi extends AppCompatActivity {
     private static final String TAG = "GeminiDemo";
@@ -29,7 +24,6 @@ public class ActivityAi extends AppCompatActivity {
     private TextView tvSubTitle;
 
     private GenerativeModel gm;
-    private final Executor executor = Executors.newSingleThreadExecutor();
 
 
     @Override
@@ -47,8 +41,8 @@ public class ActivityAi extends AppCompatActivity {
         if (intent != null && intent.hasExtra(EXTRA_COUNTRY)) {
             String country = intent.getStringExtra(EXTRA_COUNTRY);
             if (country != null && !country.isEmpty()) {
-                String promptForClue = "Give me one interesting and not too obvious clue for the country: " + country + 
-                    ". Provide ONLY the clue itself, with no introductory text, greetings, or conversational filler.";
+                String promptForClue = "Give me one interesting and not too obvious clue for the country: " + country +
+                        ". Provide ONLY the clue itself, with no introductory text, greetings, or conversational filler.";
                 editPrompt.setText(promptForClue);
                 sendToGemini();
             }
@@ -85,38 +79,44 @@ public class ActivityAi extends AppCompatActivity {
         tvSubTitle.setText("Generating your clue...");
 
         Content content = new Content.Builder().addText(prompt).build();
+        
+        // A Java wrapper around the Kotlin Gemini SDK to handle asynchronous work
         GenerativeModelFutures model = GenerativeModelFutures.from(gm);
 
-        ListenableFuture<GenerateContentResponse> response = model.generateContent(content);
-        Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
-            @Override
-            public void onSuccess(GenerateContentResponse result) {
-                String text = result.getText();
-                Log.d(TAG, "Response received; text? " + (text != null));
-                final String uiText = (text != null && !text.isEmpty()) ? text : "אין טקסט בתשובה. נסו שוב.";
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.v(TAG, "Updating UI with response (length=" + uiText.length() + ")");
-                        progress.setVisibility(View.GONE);
-                        txtAnswer.setText(uiText);
-                        tvSubTitle.setText("Here is your clue:");
-                    }
-                });
-            }
+        // Sends the request and gets a "ticket" (Future) while waiting for the network response
+        final ListenableFuture<GenerateContentResponse> response = model.generateContent(content);
 
+        new Thread(new Runnable() {
             @Override
-            public void onFailure(Throwable t) {
-                Log.e(TAG, "Request failed: " + t.getMessage(), t);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progress.setVisibility(View.GONE);
-                        txtAnswer.setText("שגיאה: " + t.getMessage());
-                        tvSubTitle.setText("Failed to generate clue.");
-                    }
-                });
+            public void run() {
+                try {
+                    // Cashing in our "ticket": Thread waits here until the AI answer is ready
+                    GenerateContentResponse result = response.get();
+                    String text = result.getText();
+                    Log.d(TAG, "Response received; text? " + (text != null));
+                    final String uiText = (text != null && !text.isEmpty()) ? text : "אין טקסט בתשובה. נסו שוב.";
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.v(TAG, "Updating UI with response (length=" + uiText.length() + ")");
+                            progress.setVisibility(View.GONE);
+                            txtAnswer.setText(uiText);
+                            tvSubTitle.setText("Here is your clue:");
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "Request failed: " + e.getMessage(), e);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.setVisibility(View.GONE);
+                            txtAnswer.setText("שגיאה: " + e.getMessage());
+                            tvSubTitle.setText("Failed to generate clue.");
+                        }
+                    });
+                }
             }
-        }, executor);
+        }).start();
     }
 }
