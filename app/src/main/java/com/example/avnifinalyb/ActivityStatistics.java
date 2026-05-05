@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -87,9 +88,18 @@ public class ActivityStatistics extends AppCompatActivity {
     }
 
     private void setStats() {
+        boolean isGiveUp = false;
         if (getIntent() != null) {
             guessesThisGame = getIntent().getIntExtra("guessAmount", -1);
             aiUse = getIntent().getBooleanExtra("aiUse", false);
+            
+            isGiveUp = getIntent().getBooleanExtra("isGiveUp", false);
+            if (isGiveUp) {
+                String targetCountry = getIntent().getStringExtra("targetCountry");
+                if (targetCountry != null) {
+                    Toast.makeText(this, "The country was: " + targetCountry, Toast.LENGTH_LONG).show();
+                }
+            }
         } else {
             guessesThisGame = -1;
             aiUse = false;
@@ -102,7 +112,11 @@ public class ActivityStatistics extends AppCompatActivity {
             usernameStr = getIntent().getStringExtra("USERNAME_KEY_ADMIN");
         }
 
-        tvGuessAmountNowResult.setText(String.valueOf(guessesThisGame));
+        if (isGiveUp) {
+            tvGuessAmountNowResult.setText("Quit");
+        } else {
+            tvGuessAmountNowResult.setText(String.valueOf(guessesThisGame));
+        }
         tvAiThisGameResult.setText(aiUse ? "Yes" : "No");
 
         if (usernameStr != null && !usernameStr.isEmpty()) {

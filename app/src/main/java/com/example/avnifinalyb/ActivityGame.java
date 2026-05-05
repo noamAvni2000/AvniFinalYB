@@ -31,7 +31,7 @@ import java.util.List;
 public class ActivityGame extends AppCompatActivity {
 
     private EditText etGuess;
-    private Button btnEnterCountry, btnAiHelp;
+    private Button btnEnterCountry, btnAiHelp, btnGiveUp;
     private TextView tvGame, tvWinMessage;
     private RecyclerView recyclerView, recyclerViewSuggestions;
     private GuessesAdapter adapter;
@@ -79,6 +79,7 @@ public class ActivityGame extends AppCompatActivity {
         setupSuggestionClickListener();
         setupTextWatcher();
         setupAiHelpButton();
+        setupGiveUpButton();
         setupEnterCountryButton();
         restartGame();
 
@@ -88,6 +89,7 @@ public class ActivityGame extends AppCompatActivity {
         etGuess = findViewById(R.id.etGuess);
         btnEnterCountry = findViewById(R.id.btnEnterCountry);
         btnAiHelp = findViewById(R.id.btnAiHelp);
+        btnGiveUp = findViewById(R.id.btnGiveUp);
         tvGame = findViewById(R.id.tvGame);
         recyclerViewSuggestions = findViewById(R.id.recyclerViewSuggestions);
         recyclerView = findViewById(R.id.recyclerView);
@@ -180,6 +182,46 @@ public class ActivityGame extends AppCompatActivity {
                 })
                 .setNegativeButton("No", null)
                 .show());
+    }
+
+    private void updateUserGiveUpStatistics() {
+        Usernames user = userNamesDao.getUserByUsername(username);
+        if (user != null) {
+            user.setGamesPlayed(user.getGamesPlayed() + 1);
+            user.setGuessAmount(user.getGuessAmount() + guessedCountries.size());
+            user.setAvgGuessAmount((double) user.getGuessAmount() / user.getGamesPlayed());
+            if (aiUse) {
+                user.setAiWinAmount(user.getAiWinAmount() + 1);
+            }
+            userNamesDao.update(user);
+        }
+    }
+
+    private void setupGiveUpButton() {
+        btnGiveUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(ActivityGame.this)
+                        .setTitle("Are you sure you want to give up?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                updateUserGiveUpStatistics();
+
+                                Intent intent = new Intent(ActivityGame.this, ActivityStatistics.class);
+                                intent.putExtra("guessAmount", guessedCountries.size());
+                                intent.putExtra("aiUse", aiUse);
+                                intent.putExtra("USERNAME_KEY", username); // Pass the username
+                                intent.putExtra("targetCountry", randomCountry.getCountry());
+                                intent.putExtra("isGiveUp", true);
+                                ActivityGame.this.startActivity(intent);
+                                ActivityGame.this.finish();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            }
+        });
     }
 
     private void setupEnterCountryButton() {

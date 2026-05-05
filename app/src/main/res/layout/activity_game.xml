@@ -19,11 +19,29 @@
         android:textColor="#1F2937"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/btnAiHelp"
+        app:layout_constraintEnd_toStartOf="@+id/btnGiveUp"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="24dp" />
+
+    <Button
+        android:id="@+id/btnGiveUp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#FEE2E2"
+        android:text="🏳️ Give Up"
+        android:textAllCaps="false"
+        android:textColor="#DC2626"
+        android:textSize="13sp"
+        android:minWidth="0dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvGame"
+        app:layout_constraintEnd_toStartOf="@+id/btnAiHelp"
+        app:layout_constraintStart_toEndOf="@+id/tvGame"
+        app:layout_constraintTop_toTopOf="@+id/tvGame" />
 
     <Button
         android:id="@+id/btnAiHelp"
@@ -40,7 +58,7 @@
         android:paddingEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvGame"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvGame"
+        app:layout_constraintStart_toEndOf="@+id/btnGiveUp"
         app:layout_constraintTop_toTopOf="@+id/tvGame" />
 
     <!-- ===== INPUT ROW ===== -->
