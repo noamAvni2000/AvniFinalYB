@@ -17,27 +17,27 @@
         android:layout_marginTop="20dp"
         android:text="🌍  Guess a Country"
         android:textColor="#1F2937"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/btnGiveUp"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="24dp" />
+        android:layout_marginStart="16dp" />
 
     <Button
         android:id="@+id/btnGiveUp"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
         android:backgroundTint="#FEE2E2"
         android:text="🏳️ Give Up"
         android:textAllCaps="false"
         android:textColor="#DC2626"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:minWidth="0dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvGame"
         app:layout_constraintEnd_toStartOf="@+id/btnAiHelp"
         app:layout_constraintStart_toEndOf="@+id/tvGame"
@@ -47,15 +47,15 @@
         android:id="@+id/btnAiHelp"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#EEF2FF"
         android:text="🤖 Hint"
         android:textAllCaps="false"
         android:textColor="#4A6CF7"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:minWidth="0dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnGiveUp"
@@ -121,9 +121,9 @@
         android:id="@+id/headerRow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:background="#E5E7EB"
         android:orientation="horizontal"
         android:paddingTop="8dp"
@@ -140,7 +140,7 @@
             android:gravity="center"
             android:text="🏳️ Country"
             android:textColor="#374151"
-            android:textSize="11sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
@@ -151,7 +151,7 @@
             android:gravity="center"
             android:text="🗺️ Continent"
             android:textColor="#374151"
-            android:textSize="11sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
@@ -162,7 +162,7 @@
             android:gravity="center"
             android:text="🕊️ Religion"
             android:textColor="#374151"
-            android:textSize="11sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
@@ -173,7 +173,7 @@
             android:gravity="center"
             android:text="🏔️ Land"
             android:textColor="#374151"
-            android:textSize="11sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
@@ -184,7 +184,7 @@
             android:gravity="center"
             android:text="✈️ Noam"
             android:textColor="#374151"
-            android:textSize="11sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
@@ -195,7 +195,7 @@
             android:gravity="center"
             android:text="👥 Pop."
             android:textColor="#374151"
-            android:textSize="11sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
     </LinearLayout>
 
